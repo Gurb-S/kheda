@@ -6,6 +6,10 @@ import { red } from '@mui/material/colors';
 
 //* COMPONENTS
 import { UserSignIn } from './components/auth/UserSignIn';
+import { Footer } from './components/widgets/Footer';
+
+//* Widgets
+
 
 const theme = createTheme({
   palette: {
@@ -29,6 +33,7 @@ function App() {
             <Route path="/" element={<UserSignIn />}/>
           </Routes>
         </Router>
+        <Footer sx={{ mt: 8, mb: 4 }} />
       </Container>
     </ThemeProvider>
   );
