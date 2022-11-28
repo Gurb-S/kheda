@@ -12,10 +12,10 @@ const theme = createTheme({
     mode: 'light',
     primary: {
       main: '#EE3B55',
-      light: '#03a9f4'
+      light: '#1976d2'
     },
     secondary:{
-      main: '#FFFEFE'
+      main: '#FFFEFE',
     },
   },
 });
