@@ -10,32 +10,9 @@ import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
-import { ThemeProvider } from '@mui/material/styles';
 import { useTheme } from '@mui/material/styles';
 import logo from "../../imgs/dice.png";
 
-
-function Copyright(props) {
-    return (
-      <Typography variant="body2" color="text.secondary" align="center" {...props}>
-        {'Copyright © '}
-        <Link color="inherit" href="/">
-          Kheda
-        </Link>{' '}
-        {new Date().getFullYear()}
-        {'.'}
-      </Typography>
-    );
-  }
-
-// const theme = createTheme();
-// const theme = createTheme({
-//     palette: {
-//       primary: {
-//         main: red[500],
-//       },
-//     },
-//   });
 
 export function UserSignIn() {
     const handleSubmit = (event) => {
@@ -46,16 +23,9 @@ export function UserSignIn() {
           password: data.get('password'),
         });
     };
-    const theme = useTheme();
-
-    console.log(theme.palette.primary.main)
-    console.log(theme.palette.secondary.main)
     
     return (
-        <ThemeProvider theme={theme}>
-            <Container component="main" maxWidth="xs">
-            <p>{theme.palette.primary.main}</p>
-            <p>{theme.palette.secondary.main}</p>
+        <Container component="main" maxWidth="xs">
             <CssBaseline />
             <Box
                 sx={{
@@ -66,7 +36,7 @@ export function UserSignIn() {
                 }}
             >
                 <Avatar alt="Kheda logo" src={logo} sx={{ width: 100, height: 100 }} />
-                <Typography component="h1" variant="h5">
+                <Typography component="h1" variant="h4">
                 Sign in
                 </Typography>
                 <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
@@ -79,7 +49,8 @@ export function UserSignIn() {
                     name="email"
                     autoComplete="email"
                     autoFocus
-                    sx={{ bgcolor: 'secondary.main', borderRadius: '16px', border: 0 }}
+                    variant='filled'
+                    sx={{ bgcolor: 'secondary.main', borderRadius: '5px' }}
                 />
                 <TextField
                     margin="normal"
@@ -90,6 +61,7 @@ export function UserSignIn() {
                     type="password"
                     id="password"
                     autoComplete="current-password"
+                    variant='filled'
                     sx={{ bgcolor: 'secondary.main', borderRadius: '5px' }}
                 />
                 <FormControlLabel
@@ -106,9 +78,7 @@ export function UserSignIn() {
                 </Button>
                 <Grid container>
                     <Grid item xs>
-                    <Link href="#" variant="body2"
-                        sx={{ color: 'primary.light' }}
-                    >
+                    <Link href="#" variant="body2" underline='hover' sx={{ color: 'primary.light' }}>
                         Forgot password?
                     </Link>
                     </Grid>
@@ -120,8 +90,6 @@ export function UserSignIn() {
                 </Grid>
                 </Box>
             </Box>
-            <Copyright sx={{ mt: 8, mb: 4 }} />
-            </Container>
-        </ThemeProvider>
+        </Container>
     );
 }
