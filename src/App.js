@@ -2,16 +2,20 @@ import React from 'react'
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import { Container } from '@mui/system';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
-import { red } from '@mui/material/colors';
+import './App.css'
 
 //* COMPONENTS
 import { UserSignIn } from './components/auth/UserSignIn';
 import { Footer } from './components/widgets/Footer';
 
-//* Widgets
 
+//* 
+const font = "'Inder', sans-serif";
 
 const theme = createTheme({
+  typography: {
+    fontFamily: font
+  },
   palette: {
     mode: 'light',
     primary: {
