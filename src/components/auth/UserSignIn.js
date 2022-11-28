@@ -10,8 +10,10 @@ import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { ThemeProvider } from '@mui/material/styles';
+import { useTheme } from '@mui/material/styles';
 import logo from "../../imgs/dice.png";
+
 
 function Copyright(props) {
     return (
@@ -26,7 +28,14 @@ function Copyright(props) {
     );
   }
 
-const theme = createTheme();
+// const theme = createTheme();
+// const theme = createTheme({
+//     palette: {
+//       primary: {
+//         main: red[500],
+//       },
+//     },
+//   });
 
 export function UserSignIn() {
     const handleSubmit = (event) => {
@@ -37,10 +46,16 @@ export function UserSignIn() {
           password: data.get('password'),
         });
     };
+    const theme = useTheme();
+
+    console.log(theme.palette.primary.main)
+    console.log(theme.palette.secondary.main)
     
     return (
         <ThemeProvider theme={theme}>
             <Container component="main" maxWidth="xs">
+            <p>{theme.palette.primary.main}</p>
+            <p>{theme.palette.secondary.main}</p>
             <CssBaseline />
             <Box
                 sx={{
@@ -64,6 +79,7 @@ export function UserSignIn() {
                     name="email"
                     autoComplete="email"
                     autoFocus
+                    sx={{ bgcolor: 'secondary.main', borderRadius: '16px', border: 0 }}
                 />
                 <TextField
                     margin="normal"
@@ -74,27 +90,30 @@ export function UserSignIn() {
                     type="password"
                     id="password"
                     autoComplete="current-password"
+                    sx={{ bgcolor: 'secondary.main', borderRadius: '5px' }}
                 />
                 <FormControlLabel
-                    control={<Checkbox value="remember" color="primary" />}
+                    control={<Checkbox value="remember" color='primary' />}
                     label="Remember me"
                 />
                 <Button
                     type="submit"
                     fullWidth
                     variant="contained"
-                    sx={{ mt: 3, mb: 2 }}
+                    sx={{ mt: 3, mb: 2, borderRadius: 50 }}
                 >
                     Sign In
                 </Button>
                 <Grid container>
                     <Grid item xs>
-                    <Link href="#" variant="body2">
+                    <Link href="#" variant="body2"
+                        sx={{ color: 'primary.light' }}
+                    >
                         Forgot password?
                     </Link>
                     </Grid>
                     <Grid item>
-                    <Link href="#" variant="body2">
+                    <Link href="#" variant="body2" underline='hover' sx={{ color: 'primary.light' }}>
                         {"Don't have an account? Sign Up"}
                     </Link>
                     </Grid>
