@@ -7,9 +7,10 @@ import './App.css'
 //* COMPONENTS
 import { UserSignIn } from './components/auth/UserSignIn';
 import { Footer } from './components/widgets/Footer';
+import { ThirdPartyAccountOptions } from './components/widgets/ThirdPartyAccountOptions';
+import { UserSignUp } from './components/auth/UserSignUp';
 
 
-//* 
 const font = "'Inder', sans-serif";
 
 const theme = createTheme({
@@ -35,6 +36,8 @@ function App() {
         <Router>
           <Routes>
             <Route path="/" element={<UserSignIn />}/>
+            <Route path='/test' element={<UserSignUp />}/>
+            <Route path='/test2' element={<ThirdPartyAccountOptions />}/>
           </Routes>
         </Router>
         <Footer sx={{ mt: 8, mb: 4 }} />
