@@ -13,7 +13,7 @@ import Container from '@mui/material/Container';
 import logo from "../../imgs/dice.png";
 import googleLogo from '../../imgs/google.png';
 import phoneIcon from '../../imgs/phone-icon.png';
-import { ThirdPartyAccountOptions} from './ThirdPartyAccountOptions';
+import { ThirdPartyAccountOptions} from '../widgets/ThirdPartyAccountOptions';
 
 
 export function UserSignIn() {
