@@ -31,7 +31,7 @@ export function UserSignIn() {
             <CssBaseline />
             <Box
                 sx={{
-                marginTop: 8,
+                marginTop: 6,
                 display: 'flex',
                 flexDirection: 'column',
                 alignItems: 'center',
@@ -85,7 +85,7 @@ export function UserSignIn() {
                     </Link>
                     </Grid>
                     <Grid item>
-                    <Link href="/test" variant="body2" underline='hover' sx={{ color: 'primary.light' }}>
+                    <Link href="/signup" variant="body2" underline='hover' sx={{ color: 'primary.light' }}>
                         {"Don't have an account? Sign Up"}
                     </Link>
                     </Grid>
