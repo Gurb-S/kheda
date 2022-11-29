@@ -91,8 +91,8 @@ export function UserSignIn() {
                 </Box>
                 <Box sx={{ mt: 4 }}>
                     <Grid item xs>
-                        <ThirdPartyAccountOptions icon='phone' link='/test2' type='Sign in'/>
-                        <ThirdPartyAccountOptions icon='google' link='/test' type='Sign in'/>
+                        <ThirdPartyAccountOptions icon='phone' link='/test2' type='sign-in'/>
+                        <ThirdPartyAccountOptions icon='google' link='/test' type='sign in'/>
                     </Grid>
                 </Box>
             </Box>
