@@ -11,7 +11,7 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import logo from "../../imgs/dice.png";
-import { SignInOptions } from './SignInOptions';
+import { ThirdPartyAccountOptions} from './ThirdPartyAccountOptions';
 
 
 export function UserSignIn() {
@@ -91,8 +91,8 @@ export function UserSignIn() {
                 </Box>
                 <Box sx={{ mt: 4 }}>
                     <Grid item xs>
-                        <SignInOptions icon='phone' link='/test2' />
-                        <SignInOptions icon='google' link='/test' />
+                        <ThirdPartyAccountOptions icon='phone' link='/test2' type='Sign in'/>
+                        <ThirdPartyAccountOptions icon='google' link='/test' type='Sign in'/>
                     </Grid>
                 </Box>
             </Box>
