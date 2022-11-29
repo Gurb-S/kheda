@@ -11,6 +11,7 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import logo from "../../imgs/dice.png";
+import { SignInOptions } from './SignInOptions';
 
 
 export function UserSignIn() {
@@ -38,7 +39,7 @@ export function UserSignIn() {
                 <Typography component="h1" variant="h4">
                 Sign in
                 </Typography>
-                <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
+                <Box component="form" onSubmit={handleSubmit} noValidate sx={{ my: 1 }}>
                 <TextField
                     margin="normal"
                     required
@@ -69,24 +70,30 @@ export function UserSignIn() {
                 />
                 <Button
                     type="submit"
-                    fullWidth
+                    size='large'
                     variant="contained"
-                    sx={{ mt: 3, mb: 2, borderRadius: 50 }}
+                    sx={{ mt: 3, mb: 2, borderRadius: '16px', display: 'block', mx: 'auto' }}
                 >
                     Sign In
                 </Button>
-                <Grid container>
+                <Grid container sx={{ mt: 2 }}>
                     <Grid item xs>
-                    <Link href="#" variant="body2" underline='hover' sx={{ color: 'primary.light' }}>
+                    <Link href="/test2" variant="body2" underline='hover' sx={{ color: 'primary.light' }}>
                         Forgot password?
                     </Link>
                     </Grid>
                     <Grid item>
-                    <Link href="#" variant="body2" underline='hover' sx={{ color: 'primary.light' }}>
+                    <Link href="/test" variant="body2" underline='hover' sx={{ color: 'primary.light' }}>
                         {"Don't have an account? Sign Up"}
                     </Link>
                     </Grid>
                 </Grid>
+                </Box>
+                <Box sx={{ mt: 4 }}>
+                    <Grid item xs>
+                        <SignInOptions icon='phone' link='/test2' />
+                        <SignInOptions icon='google' link='/test' />
+                    </Grid>
                 </Box>
             </Box>
         </Container>
