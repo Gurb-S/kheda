@@ -36,7 +36,7 @@ function App() {
         <Router>
           <Routes>
             <Route path="/" element={<UserSignIn />}/>
-            <Route path='/test' element={<UserSignUp />}/>
+            <Route path='/signup' element={<UserSignUp />}/>
             <Route path='/test2' element={<ThirdPartyAccountOptions />}/>
           </Routes>
         </Router>
