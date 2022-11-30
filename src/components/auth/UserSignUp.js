@@ -12,18 +12,45 @@ import logo from "../../imgs/dice.png";
 import googleLogo from '../../imgs/google.png';
 import phoneIcon from '../../imgs/phone-icon.png';
 import { ThirdPartyAccountOptions } from '../widgets/ThirdPartyAccountOptions';
+import { useNavigate } from 'react-router-dom';
+//* FIREBASE
+import { createUserWithEmailAndPassword } from 'firebase/auth'
+import { auth, signInWithGoogle } from '../../firebase-config'
 
 
 export function UserSignUp() {
+
+  const navigate = useNavigate();
+
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
+    const register = async () => {
+      // console.log(data.get('username'))
+      //console.log('test')
+      try{
+        const user = await createUserWithEmailAndPassword(
+          auth,
+          data.get('email'),
+          data.get('password')
+        );
+        console.log(user)
+        navigate('/test2')
+      } catch(error){
+        console.log(error.message)
+      }
+    }
     console.log({
       username: data.get('username'),
       email: data.get('email'),
       password: data.get('password'),
     });
+    register();
   };
+
+  // const register = async () => {
+
+  // }
 
   return (
       <Container component="main" maxWidth="xs">
@@ -102,7 +129,7 @@ export function UserSignUp() {
            <Box sx={{ mt: 1 }}>
                     <Grid item xs>
                         <ThirdPartyAccountOptions icon={phoneIcon} name="Phone" link='/test2' type='Sign up'/>
-                        <ThirdPartyAccountOptions icon={googleLogo} name="Google" link='/test' type='Sign up'/>
+                        <ThirdPartyAccountOptions icon={googleLogo} name="Google" link={signInWithGoogle} type='Sign up'/>
                     </Grid>
             </Box>
         </Box>
