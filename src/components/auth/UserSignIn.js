@@ -14,17 +14,40 @@ import logo from "../../imgs/dice.png";
 import googleLogo from '../../imgs/google.png';
 import phoneIcon from '../../imgs/phone-icon.png';
 import { ThirdPartyAccountOptions} from '../widgets/ThirdPartyAccountOptions';
+import { useNavigate } from 'react-router-dom';
+
+//* FIREBASE
+import { auth, signInWithGoogle } from '../../firebase-config';
+import { signInWithEmailAndPassword } from 'firebase/auth';
+
 
 
 export function UserSignIn() {
+
+    const navigate = useNavigate();
     const handleSubmit = (event) => {
         event.preventDefault();
         const data = new FormData(event.currentTarget);
+        const login = async () => {
+            try{
+                const user = await signInWithEmailAndPassword(
+                    auth,
+                    data.get('email'),
+                    data.get('password')
+                );
+                console.log(user)
+                navigate('/test2')
+            } catch(error){
+                console.log(error.message)
+                }
+        }
         console.log({
           email: data.get('email'),
           password: data.get('password'),
         });
+        login();
     };
+
     
     return (
         <Container component="main" maxWidth="xs">
@@ -94,10 +117,11 @@ export function UserSignIn() {
                 <Box sx={{ mt: 4 }}>
                     <Grid item xs>
                         <ThirdPartyAccountOptions icon={phoneIcon} name="Phone" link='/test2' type='Sign in'/>
-                        <ThirdPartyAccountOptions icon={googleLogo} name="Google" link='/test' type='Sign in'/>
+                        <ThirdPartyAccountOptions icon={googleLogo} name="Google" link={signInWithGoogle} type='Sign in'/>
                     </Grid>
                 </Box>
             </Box>
+            <div id='recaptcha-container'></div>
         </Container>
     );
 }
