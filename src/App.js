@@ -6,9 +6,12 @@ import './App.css'
 
 //* COMPONENTS
 import { UserSignIn } from './components/auth/UserSignIn';
-import { Footer } from './components/widgets/Footer';
-import { ThirdPartyAccountOptions } from './components/widgets/ThirdPartyAccountOptions';
 import { UserSignUp } from './components/auth/UserSignUp';
+
+//* Widgets
+import { Footer } from './components/widgets/Footer';
+import { LoggedIn } from './components/auth/LoggedIn';
+
 
 
 const font = "'Inder', sans-serif";
@@ -37,7 +40,7 @@ function App() {
           <Routes>
             <Route path="/" element={<UserSignIn />}/>
             <Route path='/signup' element={<UserSignUp />}/>
-            <Route path='/test2' element={<ThirdPartyAccountOptions />}/>
+            <Route path='/test2' element={<LoggedIn />}/>
           </Routes>
         </Router>
         <Footer sx={{ mt: 8, mb: 4 }} />
