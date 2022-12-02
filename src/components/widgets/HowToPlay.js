@@ -12,15 +12,13 @@ import { Button } from '@mui/material';
 import { Box } from '@mui/system';
 
 //* Icons
-import oneWhole from '../../imgs/one-whole-yellow.png';
-// import twoCircle from '../../imgs/two-circle-yellow.png';
-import twoWhole from '../../imgs/two-whole-yellow.png';
-import threeWhole from '../../imgs/three-whole-yellow.png';
-// import fourCircle from '../../imgs/four-circle-yellow.png';
-import fourWhole from '../../imgs/four-whole-yellow.png';
-import fiveWhole from '../../imgs/five-whole-yellow.png';
-import hint from '../../imgs/hint.png';
-import attention from '../../imgs/attention.png';
+import oneWhole from '../../imgs/main_page/one-whole-yellow.png';
+import twoWhole from '../../imgs/main_page/two-whole-yellow.png';
+import threeWhole from '../../imgs/main_page/three-whole-yellow.png';
+import fourWhole from '../../imgs/main_page/four-whole-yellow.png';
+import fiveWhole from '../../imgs/main_page/five-whole-yellow.png';
+import hint from '../../imgs/main_page/hint.png';
+import attention from '../../imgs/main_page/attention.png';
 
 
 

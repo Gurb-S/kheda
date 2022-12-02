@@ -11,8 +11,8 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import logo from "../../imgs/dice.png";
-import googleLogo from '../../imgs/google.png';
-import phoneIcon from '../../imgs/phone-icon.png';
+import googleLogo from '../../imgs/third_party_options/google.png';
+import phoneIcon from '../../imgs/third_party_options/phone-icon.png';
 import { ThirdPartyAccountOptions} from '../widgets/ThirdPartyAccountOptions';
 import { useNavigate } from 'react-router-dom';
 

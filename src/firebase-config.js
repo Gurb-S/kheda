@@ -1,5 +1,5 @@
 import { initializeApp } from "firebase/app";
-import { getAuth, GoogleAuthProvider, signInWithPopup } from 'firebase/auth'
+import { getAuth, GoogleAuthProvider, signInWithPopup, RecaptchaVerifier } from 'firebase/auth'
 
 const firebaseConfig = {
     apiKey: process.env.REACT_APP_API_KEY,
@@ -13,6 +13,15 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig);
 export const auth = getAuth(app)
+
+//* Phone Auth
+window.RecaptchaVerifier = new RecaptchaVerifier('recaptcha-container', {
+    'size': 'invisible',
+    'callback': (response) => {
+      // reCAPTCHA solved, allow signInWithPhoneNumber.
+    //   onSignInSubmit();
+    }
+}, auth)
 
 
 //* Google Auth

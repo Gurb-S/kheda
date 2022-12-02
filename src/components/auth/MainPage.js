@@ -7,8 +7,8 @@ import { onAuthStateChanged, signOut } from 'firebase/auth';
 
 //* icons
 import MainLogo from "../../imgs/dice.png";
-import startGameLogo from '../../imgs/yellow-human-start-game.png'
-import joinGameLogo from '../../imgs/two-people-join-game.png'
+import startGameLogo from '../../imgs/main_page/yellow-human-start-game.png'
+import joinGameLogo from '../../imgs/main_page/two-people-join-game.png'
 
 //* Material UI
 import { Container } from '@mui/system';
