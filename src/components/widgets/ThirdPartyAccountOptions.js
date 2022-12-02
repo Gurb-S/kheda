@@ -24,8 +24,12 @@ import { Link } from 'react-router-dom';
  */
 
 export function ThirdPartyAccountOptions({icon,name,link,type,game = false, bgcolor='none'}){
+    let page = '#'
+    if(typeof link === 'string'){
+        page = {link}
+    }
     return(
-        <Link to='#' onClick={link} className='text-decoration-none text-dark'>
+        <Link to={link} onClick={link} className='text-decoration-none text-dark'>
             <div className="card m-4" style={{ height: '59.2px', width: '290px', backgroundColor: bgcolor}}>
                 <div className="row g-0 d-flex align-items-center mt-1">
                     <div className="col-4 mb-1 d-flex justify-content-evenly">
