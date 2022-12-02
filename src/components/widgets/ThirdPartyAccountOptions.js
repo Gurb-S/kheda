@@ -3,10 +3,10 @@ import { Link } from 'react-router-dom';
 
 
 /**
- * This function takes in 2 strings  and 2 object as parameters (icon(obj), name, link(obj), and type). 
+ * This function takes in 2 strings and 2 object as parameters (icon(obj), name, link(obj), and type). 
  *  -The icon(obj) is the img you would like to display. When calling in this function the img must be passed in as an object. 
  *  -The name is the what you would like the name of the 3rd party option to be displayed as
- *  -The link(obj) is the function that will handle your 3rd party login
+ *  -The link(obj) is the function that will handle your 3rd party login, if a string is passed in for link, page will be rerouted if it makes a route of the page
  *  -The type asks what type of btn you would like this to be. This is be displayed to the user
  * 
  * //* EXAMPLE in Code

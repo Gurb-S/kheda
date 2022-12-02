@@ -5,12 +5,13 @@ import { ThemeProvider, createTheme } from '@mui/material/styles';
 import './App.css'
 
 //* COMPONENTS
-import { UserSignIn } from './components/auth/UserSignIn';
-import { UserSignUp } from './components/auth/UserSignUp';
+import { UserSignIn } from './components/pages/UserSignIn';
+import { UserSignUp } from './components/pages/UserSignUp';
+import { PhoneSignUp } from './components/pages/PhoneSignUp';
 
 //* Widgets
 import { Footer } from './components/widgets/Footer';
-import { MainPage } from './components/auth/MainPage';
+import { MainPage } from './components/pages/MainPage';
 
 
 
@@ -40,8 +41,9 @@ function App() {
         <Router>
           <Routes>
             <Route path="/" element={<UserSignIn />}/>
-            <Route path='/signup' element={<UserSignUp />}/>
             <Route path='/home' element={<MainPage />}/>
+            <Route path='/signup' element={<UserSignUp />}/>
+            <Route path='/phone-auth' element={<PhoneSignUp />}/>
           </Routes>
         </Router>
         <Footer sx={{ mt: 8, mb: 4 }} />
