@@ -36,7 +36,7 @@ export function UserSignIn() {
                     data.get('password')
                 );
                 console.log(user)
-                navigate('/test2')
+                navigate('/home')
             } catch(error){
                 console.log(error.message)
                 }
