@@ -23,10 +23,10 @@ import { Link } from 'react-router-dom';
  *  -- have had glitchs where react-bootstrap was also required. Seems to work fine now but putting here just in case this info     * needed in future
  */
 
-export function ThirdPartyAccountOptions({icon,name,link,type,game = false}){
+export function ThirdPartyAccountOptions({icon,name,link,type,game = false, bgcolor='none'}){
     return(
         <Link to='#' onClick={link} className='text-decoration-none text-dark'>
-            <div className="card m-4" style={{ height: '59.2px', width: '290px'}}>
+            <div className="card m-4" style={{ height: '59.2px', width: '290px', backgroundColor: bgcolor}}>
                 <div className="row g-0 d-flex align-items-center mt-1">
                     <div className="col-4 mb-1 d-flex justify-content-evenly">
                         <img src={icon} className="img-fluid rounded-start me-4" alt="..."  height='50px' width='50px' />
