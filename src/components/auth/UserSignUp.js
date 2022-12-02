@@ -1,4 +1,6 @@
 import React from 'react'
+
+//* Material UI
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -8,13 +10,17 @@ import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
+
+//* IMGS
 import logo from "../../imgs/dice.png";
 import googleLogo from '../../imgs/google.png';
 import phoneIcon from '../../imgs/phone-icon.png';
+
 import { ThirdPartyAccountOptions } from '../widgets/ThirdPartyAccountOptions';
 import { useNavigate } from 'react-router-dom';
+
 //* FIREBASE
-import { createUserWithEmailAndPassword } from 'firebase/auth'
+import { createUserWithEmailAndPassword, updateProfile } from 'firebase/auth'
 import { auth, signInWithGoogle } from '../../firebase-config'
 
 
@@ -24,6 +30,7 @@ export function UserSignUp() {
 
   const handleSubmit = (event) => {
     event.preventDefault();
+    const randomNumber = Math.floor(Math.random() * 5000)
     const data = new FormData(event.currentTarget);
     const register = async () => {
       // console.log(data.get('username'))
@@ -33,9 +40,15 @@ export function UserSignUp() {
           auth,
           data.get('email'),
           data.get('password')
-        );
+        )
+        if(user){
+          updateProfile(auth.currentUser, {
+            displayName: data.get('username'),
+            photoURL: `https://avatars.dicebear.com/api/bottts/${randomNumber}.svg`
+          })
+        }
         console.log(user)
-        navigate('/test2')
+        navigate('/home')
       } catch(error){
         console.log(error.message)
       }
@@ -47,10 +60,6 @@ export function UserSignUp() {
     });
     register();
   };
-
-  // const register = async () => {
-
-  // }
 
   return (
       <Container component="main" maxWidth="xs">
