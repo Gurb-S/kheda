@@ -10,7 +10,7 @@ import { UserSignUp } from './components/auth/UserSignUp';
 
 //* Widgets
 import { Footer } from './components/widgets/Footer';
-import { LoggedIn } from './components/auth/LoggedIn';
+import { MainPage } from './components/auth/MainPage';
 
 
 
@@ -28,6 +28,7 @@ const theme = createTheme({
     },
     secondary:{
       main: '#FFFEFE',
+      light: '#78A1D1'
     },
   },
 });
@@ -40,7 +41,7 @@ function App() {
           <Routes>
             <Route path="/" element={<UserSignIn />}/>
             <Route path='/signup' element={<UserSignUp />}/>
-            <Route path='/test2' element={<LoggedIn />}/>
+            <Route path='/home' element={<MainPage />}/>
           </Routes>
         </Router>
         <Footer sx={{ mt: 8, mb: 4 }} />
