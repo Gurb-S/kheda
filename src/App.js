@@ -43,7 +43,8 @@ function App() {
             <Route path="/" element={<UserSignIn />}/>
             <Route path='/home' element={<MainPage />}/>
             <Route path='/signup' element={<UserSignUp />}/>
-            <Route path='/phone-auth' element={<PhoneSignUp />}/>
+            <Route path='/phonesignup' element={<PhoneSignUp />}/>
+            {/* <Route path='/phonesignin' element={<PhoneSignUp />}/> */}
           </Routes>
         </Router>
         <Footer sx={{ mt: 8, mb: 4 }} />
