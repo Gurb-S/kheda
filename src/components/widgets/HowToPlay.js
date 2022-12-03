@@ -44,6 +44,8 @@ export function HowToPlay(){
                 onClose={handleClose} 
                 aria-labelledby="modal-modal-title" 
                 aria-describedby="modal-modal-description"
+                sx={{overflowY: 'scroll'}}
+                disableScrollLock={false}
             >
                 <Card sx={{ maxWidth: 345, mx: 'auto', mt: 15 }}>
                     <CardContent sx={{ pt: 1 }}>
