@@ -73,13 +73,12 @@ export function PhoneSignUp(){
                       photoURL: `https://avatars.dicebear.com/api/bottts/${randomNumber}.svg`
                     })
                   }
-                  console.log(user)
-                  navigate('/home')
+                console.log(user)
+                navigate('/home')
             }).catch((error) => {
             // User couldn't sign in (bad verification code?)
             // ...
             });
-              
         }
     }
 
@@ -104,15 +103,15 @@ export function PhoneSignUp(){
                 <Grid container spacing={2}>
                     <Grid item xs={12} sx={{ mb: 1 }}>
                         <TextField
-                        autoComplete="username"
-                        name="username"
-                        required
-                        fullWidth
-                        id="username"
-                        label="Username"
-                        autoFocus
-                        variant='filled'
-                        sx={{ bgcolor: 'secondary.main', borderRadius: '5px', mt:3 }}
+                            autoComplete="username"
+                            name="username"
+                            required
+                            fullWidth
+                            id="username"
+                            label="Username"
+                            autoFocus
+                            variant='filled'
+                            sx={{ bgcolor: 'secondary.main', borderRadius: '5px', mt:3 }}
                         />
                     </Grid>
                     <Grid item xs={12} sx={{ mb: 1 }}>
@@ -128,16 +127,16 @@ export function PhoneSignUp(){
                     </Grid>
                     <Grid item xs={12} sx={{ mb: 1 }}>
                         <TextField
-                        fullWidth
-                        id="otp-number"
-                        label="OTP"
-                        name="otp-number"
-                        autoComplete="otp-number"
-                        variant='filled'
-                        type='number'
-                        value={OTP}
-                        onChange={verifyOTP}
-                        sx={{ bgcolor: 'secondary.main', borderRadius: '5px', visibility:show }}
+                            fullWidth
+                            id="otp-number"
+                            label="OTP"
+                            name="otp-number"
+                            autoComplete="otp-number"
+                            variant='filled'
+                            type='number'
+                            value={OTP}
+                            onChange={verifyOTP}
+                            sx={{ bgcolor: 'secondary.main', borderRadius: '5px', visibility:show }}
                         />
                     </Grid>
                 </Grid>
