@@ -1,5 +1,5 @@
 import { initializeApp } from "firebase/app";
-import { getAuth, GoogleAuthProvider, signInWithPopup, RecaptchaVerifier } from 'firebase/auth'
+import { getAuth, GoogleAuthProvider, signInWithPopup, RecaptchaVerifier, signInWithPhoneNumber } from 'firebase/auth'
 
 const firebaseConfig = {
     apiKey: process.env.REACT_APP_API_KEY,
@@ -15,13 +15,28 @@ const app = initializeApp(firebaseConfig);
 export const auth = getAuth(app)
 
 //* Phone Auth
-window.RecaptchaVerifier = new RecaptchaVerifier('recaptcha-container', {
-    'size': 'invisible',
-    'callback': (response) => {
-      // reCAPTCHA solved, allow signInWithPhoneNumber.
-    //   onSignInSubmit();
-    }
-}, auth)
+export const setUpRecaptcha = () => {
+    window.RecaptchaVerifier = new RecaptchaVerifier('recaptcha-container', {
+        'size': 'invisible',
+        'callback': (response) => {
+        // reCAPTCHA solved, allow signInWithPhoneNumber.
+        //   onSignInSubmit();
+        }
+    }, auth)
+}
+
+// const requestOTP = (e) => {
+//     e.preventDefault();
+//     setUpRecaptcha();
+//     let appVerifier = window.RecaptchaVerifier;
+//     signInWithPhoneNumber(auth, phone,appVerifier )
+//     .then((confirmationResult) => {
+//         window.confirmationResult = confirmationResult;
+//     }).catch((error) =>{
+//         console.log(error)
+//     })
+// }
+
 
 
 //* Google Auth
