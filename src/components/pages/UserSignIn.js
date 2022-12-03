@@ -116,7 +116,7 @@ export function UserSignIn() {
                 </Box>
                 <Box sx={{ mt: 4 }}>
                     <Grid item xs>
-                        <ThirdPartyAccountOptions icon={phoneIcon} name="Phone" link='/phone-auth' type='Sign in'/>
+                        <ThirdPartyAccountOptions icon={phoneIcon} name="Phone" link='/phonesignin' type='Sign in'/>
                         <ThirdPartyAccountOptions icon={googleLogo} name="Google" link={signInWithGoogle} type='Sign in'/>
                     </Grid>
                 </Box>
