@@ -12,6 +12,7 @@ import { PhoneSignUp } from './components/pages/PhoneSignUp';
 //* Widgets
 import { Footer } from './components/widgets/Footer';
 import { MainPage } from './components/pages/MainPage';
+import { PhoneSignIn } from './components/pages/PhoneSignIn';
 
 
 
@@ -44,7 +45,7 @@ function App() {
             <Route path='/home' element={<MainPage />}/>
             <Route path='/signup' element={<UserSignUp />}/>
             <Route path='/phonesignup' element={<PhoneSignUp />}/>
-            {/* <Route path='/phonesignin' element={<PhoneSignUp />}/> */}
+            <Route path='/phonesignin' element={<PhoneSignIn />}/>
           </Routes>
         </Router>
         <Footer sx={{ mt: 8, mb: 4 }} />
