@@ -1,4 +1,5 @@
 import React,{useState} from 'react'
+import { useNavigate } from 'react-router-dom';
 
 //* Material UI
 import Avatar from '@mui/material/Avatar';
@@ -13,26 +14,41 @@ import Container from '@mui/material/Container';
 
 import logo from "../../imgs/dice.png";
 import { setUpRecaptcha, auth } from '../../firebase-config'
-import { signInWithPhoneNumber } from 'firebase/auth';
+import { signInWithPhoneNumber, updateProfile } from 'firebase/auth';
 
-//*
+//* Phone
+import { MuiTelInput } from 'mui-tel-input'
 
 export function PhoneSignUp(){
 
+    const navigate = useNavigate();
     const [value, setValue] = useState()
+
+    const [show, setShow] = useState('hidden')
+
+    const [OTP, setOTP] = useState('')
+
+    const [userName, setUserName] = useState('');
 
     const handleSubmit = async (event) => {
         event.preventDefault();
-        //const randomNumber = Math.floor(Math.random() * 5000)
+        //* data from form field
         const data = new FormData(event.currentTarget);
+        //* phone
         setUpRecaptcha();
         let appVerifier = window.RecaptchaVerifier;
-        signInWithPhoneNumber(auth,value,appVerifier )
+        setUserName(data.get('username'))
+        signInWithPhoneNumber(auth,value,appVerifier)
         .then((confirmationResult) => {
             window.confirmationResult = confirmationResult;
-        }).catch((error) =>{
+        })
+        .then((res) => {
+            setShow('visible')
+        })
+        .catch((error) =>{
             console.log(error)
         })
+        //* phone
         console.log(value)
         // console.log({
         //   username: data.get('username'),
@@ -40,6 +56,32 @@ export function PhoneSignUp(){
         //   password: data.get('password'),
         // });
     };
+
+    const verifyOTP = (e) => {
+        let otpValue = e.target.value;
+        const randomNumber = Math.floor(Math.random() * 5000)
+        setOTP(otpValue);
+        if(otpValue.length === 6){
+            let confirmationResult = window.confirmationResult;
+            confirmationResult.confirm(otpValue).then((result) => {
+                // User signed in successfully.
+                const user = result.user;
+                // ...
+                if(user){
+                    updateProfile(auth.currentUser, {
+                      displayName: userName,
+                      photoURL: `https://avatars.dicebear.com/api/bottts/${randomNumber}.svg`
+                    })
+                  }
+                  console.log(user)
+                  navigate('/home')
+            }).catch((error) => {
+            // User couldn't sign in (bad verification code?)
+            // ...
+            });
+              
+        }
+    }
 
 
     return(
@@ -58,7 +100,7 @@ export function PhoneSignUp(){
                     Phone Sign up
                 </Typography>
             </Box>
-            <Box component="form" noValidate onSubmit={handleSubmit}  sx={{ my: 3  }}>
+            <Box component="form" noValidate onSubmit={handleSubmit}  sx={{ my: 3 }}>
                 <Grid container spacing={2}>
                     <Grid item xs={12} sx={{ mb: 1 }}>
                         <TextField
@@ -70,34 +112,34 @@ export function PhoneSignUp(){
                         label="Username"
                         autoFocus
                         variant='filled'
-                        sx={{ bgcolor: 'secondary.main', borderRadius: '5px' }}
+                        sx={{ bgcolor: 'secondary.main', borderRadius: '5px', mt:3 }}
+                        />
+                    </Grid>
+                    <Grid item xs={12} sx={{ mb: 1 }}>
+                        <MuiTelInput 
+                            value={value}
+                            fullWidth
+                            onChange={setValue}
+                            defaultCountry='US'
+                            sx={{ bgcolor: 'secondary.main', borderRadius: '5px', mt: 3 }}
+                            label="Phone Number"
+                            variant='standard'
                         />
                     </Grid>
                     <Grid item xs={12} sx={{ mb: 1 }}>
                         <TextField
-                        required
                         fullWidth
-                        id="phone-number"
-                        label="Phone Number"
-                        name="phone-number"
-                        autoComplete="phone-number"
+                        id="otp-number"
+                        label="OTP"
+                        name="otp-number"
+                        autoComplete="otp-number"
                         variant='filled'
-                        sx={{ bgcolor: 'secondary.main', borderRadius: '5px' }}
+                        type='number'
+                        value={OTP}
+                        onChange={verifyOTP}
+                        sx={{ bgcolor: 'secondary.main', borderRadius: '5px', visibility:show }}
                         />
                     </Grid>
-                    {/* <Grid item xs={12} sx={{ mb: 1 }}>
-                        <TextField
-                        required
-                        fullWidth
-                        type='tel'
-                        id="phone-number"
-                        label="Phone Number"
-                        name="phone-number"
-                        autoComplete="phone-number"
-                        variant='filled'
-                        sx={{ bgcolor: 'secondary.main', borderRadius: '5px' }}
-                        />
-                    </Grid> */}
                 </Grid>
                 <Grid container sx={{ mt: 2 }}>
                     <Grid item xs={6} >
