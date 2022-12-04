@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useContext } from 'react';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -14,38 +14,29 @@ import logo from "../../imgs/dice.png";
 import googleLogo from '../../imgs/third_party_options/google.png';
 import phoneIcon from '../../imgs/third_party_options/phone-icon.png';
 import { ThirdPartyAccountOptions} from '../widgets/ThirdPartyAccountOptions';
+
+
+//* Context API
+import SiteContext from '../../context/Context';
 import { useNavigate } from 'react-router-dom';
-
-//* FIREBASE
-import { auth, signInWithGoogle } from '../../firebase-config';
-import { signInWithEmailAndPassword } from 'firebase/auth';
-
-
 
 export function UserSignIn() {
 
+    const { login, signInWithGoogle } = useContext(SiteContext);
+
     const navigate = useNavigate();
+
     const handleSubmit = (event) => {
         event.preventDefault();
         const data = new FormData(event.currentTarget);
-        const login = async () => {
-            try{
-                const user = await signInWithEmailAndPassword(
-                    auth,
-                    data.get('email'),
-                    data.get('password')
-                );
-                console.log(user)
-                navigate('/home')
-            } catch(error){
-                console.log(error.message)
-                }
-        }
-        console.log({
-          email: data.get('email'),
-          password: data.get('password'),
+        login(data.get('email'),data.get('password'))
+        .then(() =>{
+            navigate('/home')
         });
-        login();
+        console.log({
+            email: data.get('email'),
+            password: data.get('password'),
+        });
     };
 
     
