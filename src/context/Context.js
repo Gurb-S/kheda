@@ -1,28 +1,49 @@
-import React from 'react'
-
+import React, { useState } from 'react'
 //* Firebase
-import { signInWithEmailAndPassword } from 'firebase/auth';
+import { signInWithEmailAndPassword, sendPasswordResetEmail } from 'firebase/auth';
 import { auth, signInWithGoogle } from '../firebase-config';
 
 export const SiteContext = React.createContext();
 
 export function SiteProvider({ children }){
 
-    const login = async (email, password) => {
+    const [loginError, setLoginError] = useState('');
+
+    const loginUser = async (email, password,navigate) => {
         try{
             const user = await signInWithEmailAndPassword(
                 auth,
                 email,
                 password
             );
-            console.log(user)
+            //console.log(user)
+            navigate('/home')
         } catch(error){
             console.log(error.message)
+            if(error.message === 'Firebase: Error (auth/invalid-email).'){
+                setLoginError('please provide a valid email address')
+                //console.log('Not a valid Email')
+            }
+            else if(error.message === 'Firebase: Error (auth/wrong-password).'){
+                setLoginError('your email or password is incorrect')
+                //console.log('Wrong Password')
+            }
+            else if(error.message === 'Firebase: Error (auth/user-not-found).'){
+                setLoginError('your email or password is incorrect')
+                //console.log('Not a registered Email')
+            }
+            else{
+                setLoginError('server error - please close app and try again')
+                //console.log('500 - Internal Server Error: Please close app and try again')
+            }
+            console.log('Login Failed')
         }
     }
 
+
     const values = {
-        login,
+        loginUser,
+        loginError,
         signInWithGoogle
     }
 
@@ -41,9 +62,11 @@ export function SiteProvider({ children }){
 export default SiteContext;
 
 //* Sign In page
-// TODO: error validation of login with email and password
+// // TODO: error validation of login with email and password
 // TODO: don't allow user to sign in with phone unless they have create account with phone
 // TODO: error validation for phone sign in
+
+//* Password reset page
 // TODO: make forgot password work
 
 //* Sign Up page

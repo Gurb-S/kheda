@@ -21,6 +21,16 @@ import { ThirdPartyAccountOptions } from '../widgets/ThirdPartyAccountOptions';
 import SiteContext from '../../context/Context';
 import { useNavigate } from 'react-router-dom';
 
+//* bullet point
+const bull = (
+    <Box
+      component="span"
+      sx={{ display: 'inline-block', mx: '2px', transform: 'scale(0.8)' }}
+    >
+      •
+    </Box>
+);
+
 export function UserSignIn() {
 
     const { loginUser, loginError, signInWithGoogle } = useContext(SiteContext);
@@ -64,7 +74,7 @@ export function UserSignIn() {
                     autoComplete="email"
                     autoFocus
                     variant='filled'
-                    sx={{ bgcolor: 'secondary.main', borderRadius: '5px' }}
+                    sx={{ bgcolor: (loginError.length >= 1 ? 'secondary.dark' : 'secondary.main'), borderRadius: '5px' }}
                 />
                 <TextField
                     margin="normal"
@@ -76,15 +86,16 @@ export function UserSignIn() {
                     id="password"
                     autoComplete="current-password"
                     variant='filled'
-                    sx={{ bgcolor: 'secondary.main', borderRadius: '5px' }}
+                    sx={{ bgcolor: (loginError.length >= 1 && loginError !== 'please provide a valid email address' ? 'secondary.dark' : 'secondary.main'), borderRadius: '5px' }}
                 />
-                { loginError.length >= 1 
-                    ? 
-                    <div style={{ color: 'red', marginTop: '10px' }}>
-                        <h5>{loginError}</h5>
-                    </div> 
-                    : <></>}
-                <FormControlLabel
+                {(loginError.length >= 1 
+                ? 
+                  <Typography variant='h7' color="error" gutterBottom>
+                    {bull} Error: {loginError}
+                  </Typography>
+                : <></>
+                )}
+                <FormControlLabel sx={{ display: 'block'}}
                     control={<Checkbox value="remember" color='primary' />}
                     label="Remember me"
                 />
