@@ -10,10 +10,11 @@ import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
+
 import logo from "../../imgs/dice.png";
 import googleLogo from '../../imgs/third_party_options/google.png';
 import phoneIcon from '../../imgs/third_party_options/phone-icon.png';
-import { ThirdPartyAccountOptions} from '../widgets/ThirdPartyAccountOptions';
+import { ThirdPartyAccountOptions } from '../widgets/ThirdPartyAccountOptions';
 
 
 //* Context API
@@ -22,17 +23,14 @@ import { useNavigate } from 'react-router-dom';
 
 export function UserSignIn() {
 
-    const { login, signInWithGoogle } = useContext(SiteContext);
+    const { loginUser, loginError, signInWithGoogle } = useContext(SiteContext);
 
     const navigate = useNavigate();
 
     const handleSubmit = (event) => {
         event.preventDefault();
         const data = new FormData(event.currentTarget);
-        login(data.get('email'),data.get('password'))
-        .then(() =>{
-            navigate('/home')
-        });
+        loginUser(data.get('email'),data.get('password'), navigate)
         console.log({
             email: data.get('email'),
             password: data.get('password'),
@@ -80,6 +78,12 @@ export function UserSignIn() {
                     variant='filled'
                     sx={{ bgcolor: 'secondary.main', borderRadius: '5px' }}
                 />
+                { loginError.length >= 1 
+                    ? 
+                    <div style={{ color: 'red', marginTop: '10px' }}>
+                        <h5>{loginError}</h5>
+                    </div> 
+                    : <></>}
                 <FormControlLabel
                     control={<Checkbox value="remember" color='primary' />}
                     label="Remember me"
