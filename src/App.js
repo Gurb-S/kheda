@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import { Container } from '@mui/system';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import './App.css'
+import { SiteProvider } from './context/Context';
 
 //* COMPONENTS
 import { UserSignIn } from './components/pages/UserSignIn';
@@ -13,6 +14,7 @@ import { PhoneSignUp } from './components/pages/PhoneSignUp';
 import { Footer } from './components/widgets/Footer';
 import { MainPage } from './components/pages/MainPage';
 import { PhoneSignIn } from './components/pages/PhoneSignIn';
+
 
 
 
@@ -37,6 +39,7 @@ const theme = createTheme({
 
 function App() {
   return (
+    <SiteProvider>
     <ThemeProvider theme={theme}>
       <Container disableGutters={true}>
         <Router>
@@ -51,6 +54,7 @@ function App() {
         <Footer sx={{ mt: 8, mb: 4 }} />
       </Container>
     </ThemeProvider>
+    </SiteProvider>
   );
 }
 
