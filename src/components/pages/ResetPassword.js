@@ -13,12 +13,9 @@ import SiteContext from '../../context/Context';
 
 import Snackbar from '@mui/material/Snackbar';
 
-import { sendPasswordResetEmail } from "firebase/auth";
-import { auth } from '../../firebase-config';
-
 export function ResetPassword(){
 
-    const { sendResetLink, emailSent } = useContext(SiteContext)
+    const { sendResetLink } = useContext(SiteContext)
 
     //* Snackbar
     const [state, setState] = useState({
