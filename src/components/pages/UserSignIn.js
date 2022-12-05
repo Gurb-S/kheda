@@ -109,7 +109,7 @@ export function UserSignIn() {
                 </Button>
                 <Grid container sx={{ mt: 2 }}>
                     <Grid item xs>
-                    <Link href="/test2" variant="body2" underline='hover' sx={{ color: 'primary.light' }}>
+                    <Link href="/resetpassword" variant="body2" underline='hover' sx={{ color: 'primary.light' }}>
                         Forgot password?
                     </Link>
                     </Grid>
