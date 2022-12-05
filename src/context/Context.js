@@ -42,8 +42,7 @@ export function SiteProvider({ children }){
 
     const sendResetLink = async (email) => {
         try{
-            const emails = await sendPasswordResetEmail(auth, email)
-            console.log(emails)
+            await sendPasswordResetEmail(auth, email)
         }catch(error){
             const errorCode = error.code;
             const errorMessage = error.message;
@@ -55,7 +54,7 @@ export function SiteProvider({ children }){
         loginUser,
         loginError,
         signInWithGoogle,
-        sendResetLink
+        sendResetLink,
     }
 
 
