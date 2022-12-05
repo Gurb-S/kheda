@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import React, { useContext, useState } from 'react'
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -11,9 +11,30 @@ import Container from '@mui/material/Container';
 import logo from "../../imgs/dice.png";
 import SiteContext from '../../context/Context';
 
+import Snackbar from '@mui/material/Snackbar';
+
+import { sendPasswordResetEmail } from "firebase/auth";
+import { auth } from '../../firebase-config';
+
 export function ResetPassword(){
 
-    const { sendResetLink } = useContext(SiteContext)
+    const { sendResetLink, emailSent } = useContext(SiteContext)
+
+    //* Snackbar
+    const [state, setState] = useState({
+      open: false,
+      vertical: 'top',
+      horizontal: 'center',
+    });
+    const { vertical, horizontal, open } = state;
+  
+    const handleClick = (newState) => () => {
+      setState({ open: true, ...newState });
+    };
+  
+    const handleClose = () => {
+      setState({ ...state, open: false });
+    };
 
     const handleSubmit = (event) =>{
         event.preventDefault();
@@ -55,6 +76,10 @@ export function ResetPassword(){
               type="submit"
               size='large'
               variant="contained"
+              onClick={handleClick({
+                vertical: 'top',
+                horizontal: 'left',
+              })}
               sx={{ mt: 3, mb: 2, borderRadius: '16px', display: 'block', mx: 'auto' }}
             >
               Send reset link
@@ -75,6 +100,13 @@ export function ResetPassword(){
               </Grid>
             </Grid>
           </Box>
+          <Snackbar
+            anchorOrigin={{ vertical, horizontal }}
+            open={open}
+            onClose={handleClose}
+            message="Email has been sent."
+            key={vertical + horizontal}
+          />
         </Box>
       </Container>
     )
