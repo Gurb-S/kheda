@@ -40,11 +40,22 @@ export function SiteProvider({ children }){
         }
     }
 
+    const sendResetLink = async (email) => {
+        try{
+            const emails = await sendPasswordResetEmail(auth, email)
+            console.log(emails)
+        }catch(error){
+            const errorCode = error.code;
+            const errorMessage = error.message;
+            console.log(errorCode, errorMessage)
+        }
+    }
 
     const values = {
         loginUser,
         loginError,
-        signInWithGoogle
+        signInWithGoogle,
+        sendResetLink
     }
 
 
