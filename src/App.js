@@ -14,6 +14,7 @@ import { PhoneSignUp } from './components/pages/PhoneSignUp';
 import { Footer } from './components/widgets/Footer';
 import { MainPage } from './components/pages/MainPage';
 import { PhoneSignIn } from './components/pages/PhoneSignIn';
+import { ResetPassword } from './components/pages/ResetPassword';
 
 
 
@@ -50,6 +51,7 @@ function App() {
             <Route path='/signup' element={<UserSignUp />}/>
             <Route path='/phonesignup' element={<PhoneSignUp />}/>
             <Route path='/phonesignin' element={<PhoneSignIn />}/>
+            <Route path='/resetpassword' element={<ResetPassword />}/>
           </Routes>
         </Router>
         <Footer sx={{ mt: 8, mb: 4 }} />
