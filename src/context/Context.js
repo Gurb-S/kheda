@@ -77,7 +77,7 @@ export default SiteContext;
 // TODO: error validation for phone sign in
 
 //* Password reset page
-// TODO: make forgot password work
+// // TODO: make forgot password work
 
 //* Sign Up page
 // TODO: error validation for sign up with email and password
