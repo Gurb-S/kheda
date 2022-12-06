@@ -50,7 +50,6 @@ export function PhoneSignIn(){
 
     const verifyOTP = (e) => {
         let otpValue = e.target.value;
-        const randomNumber = Math.floor(Math.random() * 5000)
         setOTP(otpValue);
         if(otpValue.length === 6){
             let confirmationResult = window.confirmationResult;
@@ -59,7 +58,15 @@ export function PhoneSignIn(){
                 const user = result.user;
                 // ...
                 console.log(user)
-                navigate('/home')
+                if(user.photoURL){
+                    navigate('/home')
+                    console.log(user.photoUrl)
+                }
+                else{
+                    navigate('/phonesignup')
+                    console.log(user)
+                }
+                
             }).catch((error) => {
             // User couldn't sign in (bad verification code?)
             // ...
