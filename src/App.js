@@ -15,7 +15,7 @@ import { Footer } from './components/widgets/Footer';
 import { MainPage } from './components/pages/MainPage';
 import { PhoneSignIn } from './components/pages/PhoneSignIn';
 import { ResetPassword } from './components/pages/ResetPassword';
-
+import { PrivateRoute } from './context/PrivateRoute';
 
 
 
