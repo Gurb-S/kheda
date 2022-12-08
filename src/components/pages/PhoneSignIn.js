@@ -12,7 +12,7 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 
-import logo from "../../imgs/dice.png";
+import logo from "../../imgs/dice.png";  
 import { setUpRecaptcha, auth } from '../../firebase-config'
 import { signInWithPhoneNumber, updateProfile } from 'firebase/auth';
 
@@ -20,14 +20,27 @@ import { signInWithPhoneNumber, updateProfile } from 'firebase/auth';
 import { MuiTelInput } from 'mui-tel-input'
 
 
+//* bullet point
+const bull = (
+    <Box
+      component="span"
+      sx={{ display: 'inline-block', mx: '2px', transform: 'scale(0.8)' }}
+    >
+      •
+    </Box>
+);
+
 export function PhoneSignIn(){
 
     const navigate = useNavigate();
+
     const [value, setValue] = useState()
 
     const [show, setShow] = useState('hidden')
 
     const [OTP, setOTP] = useState('')
+
+    const [phoneError, setPhoneError] = useState('');
 
     const handleSubmit = async (event) => {
         event.preventDefault();
@@ -37,12 +50,15 @@ export function PhoneSignIn(){
         signInWithPhoneNumber(auth,value,appVerifier)
         .then((confirmationResult) => {
             window.confirmationResult = confirmationResult;
+            setPhoneError('Just called')
         })
-        .then((res) => {
+        .then(() => {
+            setPhoneError('This is the is not the issue')
             setShow('visible')
         })
         .catch((error) =>{
             console.log(error)
+            setPhoneError('Too may requests')
         })
         //* phone
         console.log(value)
@@ -57,7 +73,7 @@ export function PhoneSignIn(){
                 // User signed in successfully.
                 const user = result.user;
                 // ...
-                console.log(user)
+                console.log(user, 'test')
                 if(user.photoURL){
                     navigate('/home')
                     console.log(user.photoUrl)
@@ -69,6 +85,13 @@ export function PhoneSignIn(){
                 
             }).catch((error) => {
             // User couldn't sign in (bad verification code?)
+                console.log(error.message)
+                if(error.message === 'Firebase: Error (auth/invalid-verification-code).'){
+                    setPhoneError('Invalid Phone number or OTP code. Please refresh page and try again')
+                }
+                else{
+                    setPhoneError(error.message)
+                }
             // ...
             });
         }
@@ -114,9 +137,17 @@ export function PhoneSignIn(){
                             value={OTP}
                             onChange={verifyOTP}
                             sx={{ bgcolor: 'secondary.main', borderRadius: '5px', visibility:show }}
+                            //sx={{ bgcolor: 'secondary.main', borderRadius: '5px'}}
                         />
                     </Grid>
                 </Grid>
+                {(phoneError.length >= 1 
+                ? 
+                  <Typography variant='h7' color="error" gutterBottom>
+                    {bull} Error: {phoneError}
+                  </Typography>
+                : <></>
+                )}
                 <Grid container sx={{ mt: 2 }}>
                     <Grid item xs={6} >
                         <Link href="/" variant="body2" underline='none' sx={{ color: 'primary.light' }}>
