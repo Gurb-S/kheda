@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 //* Firebase
-import { signInWithEmailAndPassword, sendPasswordResetEmail } from 'firebase/auth';
+import { signInWithEmailAndPassword, sendPasswordResetEmail, onAuthStateChanged } from 'firebase/auth';
 import { auth, signInWithGoogle } from '../firebase-config';
 
 export const SiteContext = React.createContext();
@@ -11,7 +11,7 @@ export function SiteProvider({ children }){
 
     const loginUser = async (email, password,navigate) => {
         try{
-            const user = await signInWithEmailAndPassword(
+            await signInWithEmailAndPassword(
                 auth,
                 email,
                 password
@@ -55,6 +55,8 @@ export function SiteProvider({ children }){
         loginError,
         signInWithGoogle,
         sendResetLink,
+        auth,
+        onAuthStateChanged
     }
 
 
@@ -73,8 +75,9 @@ export default SiteContext;
 
 //* Sign In page
 // // TODO: error validation of login with email and password
-// TODO: don't allow user to sign in with phone unless they have create account with phone
+// // TODO: don't allow user to sign in with phone unless they have create account with phone
 // TODO: error validation for phone sign in
+// TODO: redirect user to home page if logged in, make sure you save user in local storage
 
 //* Password reset page
 // // TODO: make forgot password work
