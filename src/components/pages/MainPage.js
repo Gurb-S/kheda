@@ -32,7 +32,7 @@ export function MainPage() {
         localStorage.removeItem('email')
         localStorage.removeItem('name')
         localStorage.removeItem('profilePic')
-        navigate('/')
+        navigate('/signin')
     }
 
     const [ user, setUser ] = useState({});
@@ -40,6 +40,10 @@ export function MainPage() {
     onAuthStateChanged(auth,(currentUser) =>{
         setUser(currentUser)
     })
+
+    const name = localStorage.getItem("name");
+
+    //* checks if there is a profile pic item and if yes remove the red background in the div which is there for botts logos
 
     const profilePic = localStorage.getItem('profilePic');
     let divColor = '#EE3B55';
@@ -61,6 +65,7 @@ export function MainPage() {
                 <Avatar alt="Kheda logo" src={MainLogo} sx={{ width: 100, height: 100 }} />
                 <Typography component="h1" variant="h4">
                 Welcome, { user?.displayName}
+                {/* Welcome, {name} */}
                 </Typography>
                 <div className='d-flex justify-content-center align-items-center mt-4' style={{ backgroundColor: divColor, borderRadius: '50px', height: '90px', width: '90px' }}>
                     <img src={profilePic ? profilePic : user?.photoURL} alt='profile pic' height='83px' width='88px' style={{ borderRadius: '50px' }} className="mb-2"/>
