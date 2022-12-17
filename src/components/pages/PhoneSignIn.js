@@ -50,15 +50,13 @@ export function PhoneSignIn(){
         signInWithPhoneNumber(auth,value,appVerifier)
         .then((confirmationResult) => {
             window.confirmationResult = confirmationResult;
-            setPhoneError('Just called')
         })
         .then(() => {
-            setPhoneError('This is the is not the issue')
             setShow('visible')
         })
         .catch((error) =>{
             console.log(error)
-            setPhoneError('Too may requests')
+            setPhoneError('Too may requests. Please wait 2 minutes and try again.')
         })
         //* phone
         console.log(value)
@@ -71,16 +69,31 @@ export function PhoneSignIn(){
             let confirmationResult = window.confirmationResult;
             confirmationResult.confirm(otpValue).then((result) => {
                 // User signed in successfully.
-                const user = result.user;
+                // const name = result.user.displayName;
+                // const email = result.user.email;
+                // const profilePic = result.user.photoURL;
+
+                console.log(result)
+        
+                // localStorage.setItem("name", result.user.displayName);
+                // localStorage.setItem('email', result.user.email);
+                // localStorage.setItem('profilePic', result.user.photoURL);
+
+                // const name = localStorage.getItem("name");
+                // const email = localStorage.getItem("email")
+                // const profilePic = localStorage.getItem("profilePic")
+                const meme = result.user.photoURL;
+                localStorage.setItem("name", result.user.displayName)
+                localStorage.setItem('profilePic', result.user.photoURL);
                 // ...
-                console.log(user, 'test')
-                if(user.photoURL){
-                    navigate('/home')
-                    console.log(user.photoUrl)
+                console.log(meme, 'test')
+                if(meme !== null){
+                    navigate('/')
+                    console.log(meme)
                 }
                 else{
                     navigate('/phonesignup')
-                    console.log(user)
+                    console.log(meme)
                 }
                 
             }).catch((error) => {
