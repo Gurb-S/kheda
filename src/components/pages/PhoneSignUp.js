@@ -42,7 +42,7 @@ export function PhoneSignUp(){
         .then((confirmationResult) => {
             window.confirmationResult = confirmationResult;
         })
-        .then((res) => {
+        .then(() => {
             setShow('visible')
         })
         .catch((error) =>{
@@ -50,11 +50,6 @@ export function PhoneSignUp(){
         })
         //* phone
         console.log(value)
-        // console.log({
-        //   username: data.get('username'),
-        //   phoneNumber: data.get('phone-number'),
-        //   password: data.get('password'),
-        // });
     };
 
     const verifyOTP = (e) => {
@@ -72,11 +67,17 @@ export function PhoneSignUp(){
                       displayName: userName,
                       photoURL: `https://avatars.dicebear.com/api/bottts/${randomNumber}.svg`
                     })
-                  }
+                    console.log(userName)
+                    // sets the local storage for name and profile pic
+                    // the reason it needs to be storaged here is bcuz results and user are created before we update the profile
+                    localStorage.setItem("name", userName);
+                    localStorage.setItem('profilePic', `https://avatars.dicebear.com/api/bottts/${randomNumber}.svg`);
+                }
                 console.log(user)
-                navigate('/home')
+                navigate('/')
             }).catch((error) => {
             // User couldn't sign in (bad verification code?)
+                console.log(error)
             // ...
             });
         }
