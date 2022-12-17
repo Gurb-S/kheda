@@ -48,7 +48,7 @@ export function UserSignUp() {
           })
         }
         console.log(user)
-        navigate('/home')
+        navigate('/')
       } catch(error){
         console.log(error.message)
       }
@@ -129,7 +129,7 @@ export function UserSignUp() {
             </Button>
             <Grid container justifyContent="flex-end">
               <Grid item>
-                <Link href="/" variant="body2" underline='hover' sx={{ color: 'primary.light' }}>
+                <Link href="/signin" variant="body2" underline='hover' sx={{ color: 'primary.light' }}>
                   Already have an account? Sign in
                 </Link>
               </Grid>
