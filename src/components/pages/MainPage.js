@@ -1,9 +1,11 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import { useNavigate } from 'react-router-dom';
+import SiteContext from '../../context/Context';
+
 
 //* Firebase
 import { auth } from '../../firebase-config'
-import { onAuthStateChanged, signOut } from 'firebase/auth';
+import { signOut } from 'firebase/auth';
 
 //* icons
 import MainLogo from "../../imgs/dice.png";
@@ -25,6 +27,8 @@ import { HowToPlay } from '../widgets/HowToPlay';
 
 export function MainPage() {
 
+    const { currentUser } = useContext(SiteContext)
+
     const navigate = useNavigate();
 
     const logout = async () => {
@@ -35,14 +39,6 @@ export function MainPage() {
         navigate('/signin')
     }
 
-    const [ user, setUser ] = useState({});
-
-    onAuthStateChanged(auth,(currentUser) =>{
-        setUser(currentUser)
-    })
-
-    const name = localStorage.getItem("name");
-
     //* checks if there is a profile pic item and if yes remove the red background in the div which is there for botts logos
 
     const profilePic = localStorage.getItem('profilePic');
@@ -50,7 +46,7 @@ export function MainPage() {
 
     (profilePic ? divColor = '' : divColor = '#EE3B55')
 
-    console.log(user?.photoURL)
+    console.log(currentUser?.photoURL)
     return(
         <Container component="main" maxWidth="xs">
             <CssBaseline />
@@ -64,11 +60,10 @@ export function MainPage() {
             >
                 <Avatar alt="Kheda logo" src={MainLogo} sx={{ width: 100, height: 100 }} />
                 <Typography component="h1" variant="h4">
-                Welcome, { user?.displayName}
-                {/* Welcome, {name} */}
+                Welcome, { currentUser?.displayName}
                 </Typography>
                 <div className='d-flex justify-content-center align-items-center mt-4' style={{ backgroundColor: divColor, borderRadius: '50px', height: '90px', width: '90px' }}>
-                    <img src={profilePic ? profilePic : user?.photoURL} alt='profile pic' height='83px' width='88px' style={{ borderRadius: '50px' }} className="mb-2"/>
+                    <img src={profilePic ? profilePic : currentUser?.photoURL} alt='profile pic' height='83px' width='88px' style={{ borderRadius: '50px' }} className="mb-2"/>
                 </div>
                 <HowToPlay />
                 <Box sx={{ mt: 2 }}>
