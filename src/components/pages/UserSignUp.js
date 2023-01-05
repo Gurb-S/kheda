@@ -1,4 +1,5 @@
-import React from 'react'
+import React, { useContext, useState } from 'react'
+import SiteContext from '../../context/Context';
 
 //* Material UI
 import Avatar from '@mui/material/Avatar';
@@ -21,45 +22,72 @@ import { useNavigate } from 'react-router-dom';
 
 //* FIREBASE
 import { createUserWithEmailAndPassword, updateProfile } from 'firebase/auth'
-import { auth, signInWithGoogle } from '../../firebase-config'
+import { auth, signInWithGoogle, storage, db } from '../../firebase-config'
+import { ref, uploadString } from "firebase/storage";
+import { doc, setDoc } from 'firebase/firestore';
 
 
 export function UserSignUp() {
 
   const navigate = useNavigate();
 
-  const handleSubmit = (event) => {
+  const [err, setErr ] = useState(false);
+
+  const handleSubmit = async (event) => {
+
     event.preventDefault();
+    // creates a random number to put in url for bottts icon
     const randomNumber = Math.floor(Math.random() * 5000)
+    // gets data from form submitted
     const data = new FormData(event.currentTarget);
+
+    //** START value provided by user
+    const userDisplayName = data.get('username');
+    const userEmail = data.get('email');
+    const userPassword = data.get('password');
+    const userImg = `https://avatars.dicebear.com/api/bottts/${randomNumber}.svg`
+    //* END value provided by user
+
     const register = async () => {
-      // console.log(data.get('username'))
-      //console.log('test')
       try{
-        const user = await createUserWithEmailAndPassword(
-          auth,
-          data.get('email'),
-          data.get('password')
-        )
-        if(user){
-          updateProfile(auth.currentUser, {
-            displayName: data.get('username'),
-            photoURL: `https://avatars.dicebear.com/api/bottts/${randomNumber}.svg`
-          })
-        }
-        console.log(user)
-        navigate('/')
+        //creates the user's account
+        const res = await createUserWithEmailAndPassword(auth, userEmail, userPassword)
+        //creates a reference to the user in firebase storage
+        const storageRef = ref(storage, userDisplayName);
+  
+        //uploads the url for the user's icon to firebase database
+        uploadString(storageRef, userImg).then(async (snapshot) =>{
+            // updates the user's username and icon
+            await updateProfile(res.user,{
+              displayName: userDisplayName,
+              photoURL: userImg
+            })
+            //creates a user object in the user's database that holds user's id, display name and icon
+            await setDoc(doc(db, "users", res.user.uid),{
+              uid: res.user.uid,
+              displayName: userDisplayName,
+              photoURL: userImg
+            })
+            // navigate to home page
+            navigate('/')
+        })
+        //! NEED TO DELETE
+        console.log(res)
       } catch(error){
         console.log(error.message)
+        setErr(true)
       }
     }
+    //! NEED TO DELETE
     console.log({
       username: data.get('username'),
       email: data.get('email'),
       password: data.get('password'),
     });
+    // calls the register function
     register();
   };
+  
 
   return (
       <Container component="main" maxWidth="xs">
@@ -127,6 +155,7 @@ export function UserSignUp() {
             >
               Sign Up
             </Button>
+            {err && <span>Soemthing went wrong</span>}
             <Grid container justifyContent="flex-end">
               <Grid item>
                 <Link href="/signin" variant="body2" underline='hover' sx={{ color: 'primary.light' }}>
