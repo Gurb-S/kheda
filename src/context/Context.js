@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 //* Firebase
 import { signInWithEmailAndPassword, sendPasswordResetEmail, onAuthStateChanged } from 'firebase/auth';
 import { auth, signInWithGoogle } from '../firebase-config';
@@ -6,6 +6,20 @@ import { auth, signInWithGoogle } from '../firebase-config';
 export const SiteContext = React.createContext();
 
 export function SiteProvider({ children }){
+
+    const [currentUser, setCurrentUser ] = useState({});
+
+    useEffect(() =>{
+        const unsub = onAuthStateChanged(auth,(user) =>{
+            setCurrentUser(user)
+            console.log(user);
+        })
+        //defining it and calling it in the return function helps prevent memory leaking
+        return () =>{
+            unsub();
+        }
+    },[])
+
 
     const [loginError, setLoginError] = useState('');
 
@@ -17,7 +31,7 @@ export function SiteProvider({ children }){
                 password
             );
             //console.log(user)
-            navigate('/home')
+            navigate('/')
         } catch(error){
             console.log(error.message)
             if(error.message === 'Firebase: Error (auth/invalid-email).'){
@@ -55,8 +69,7 @@ export function SiteProvider({ children }){
         loginError,
         signInWithGoogle,
         sendResetLink,
-        auth,
-        onAuthStateChanged
+        currentUser
     }
 
 
@@ -76,7 +89,7 @@ export default SiteContext;
 //* Sign In page
 // // TODO: error validation of login with email and password
 // // TODO: don't allow user to sign in with phone unless they have create account with phone
-// TODO: error validation for phone sign in
+// // TODO: error validation for phone sign in
 // TODO: redirect user to home page if logged in, make sure you save user in local storage
 
 //* Password reset page
