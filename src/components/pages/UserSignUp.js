@@ -63,7 +63,6 @@ export function UserSignUp() {
       console.log(userDisplayName)
 
       try{
-
         if(!userDisplayName){
           throw new Error('No username')
         }
@@ -112,7 +111,7 @@ export function UserSignUp() {
             //console.log('Password needs to be atleast 6 characters')
         }
         else{
-            setSignUpError('server error - please close app and try again')
+            setSignUpError('server error - please refresh page and try again')
             //console.log('500 - Internal Server Error: Please close app and try again')
         }
         console.log('Sign Up Failed')
