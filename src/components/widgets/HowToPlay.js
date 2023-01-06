@@ -76,7 +76,7 @@ export function HowToPlay(){
                                     <ListItemAvatar>
                                         <Avatar alt="4." src={fourWhole} sx={{ width: 40, height: 40 }} />
                                     </ListItemAvatar>
-                                    <ListItemText primary="You are awarded 1 point for everyone that choses your answer" />
+                                    <ListItemText primary="You are awarded 1 point for everyone that chooses your answer" />
                                 </ListItem>
                                 <ListItem>
                                     <ListItemAvatar>
