@@ -33,7 +33,9 @@ export function SiteProvider({ children }){
             //console.log(user)
             navigate('/')
         } catch(error){
+            //! START: delete this
             console.log(error.message)
+            //! END: delete this
             if(error.message === 'Firebase: Error (auth/invalid-email).'){
                 setLoginError('please provide a valid email address')
                 //console.log('Not a valid Email')
@@ -43,6 +45,10 @@ export function SiteProvider({ children }){
                 //console.log('Wrong Password')
             }
             else if(error.message === 'Firebase: Error (auth/user-not-found).'){
+                setLoginError('your email or password is incorrect')
+                //console.log('Not a registered Email')
+            }
+            else if(error.message === 'Firebase: Error (auth/internal-error).'){
                 setLoginError('your email or password is incorrect')
                 //console.log('Not a registered Email')
             }
@@ -90,13 +96,13 @@ export default SiteContext;
 // // TODO: error validation of login with email and password
 // // TODO: don't allow user to sign in with phone unless they have create account with phone
 // // TODO: error validation for phone sign in
-// TODO: redirect user to home page if logged in, make sure you save user in local storage
+// // TODO: redirect user to home page if logged in
 
 //* Password reset page
 // // TODO: make forgot password work
 
 //* Sign Up page
-// TODO: error validation for sign up with email and password
+// // TODO: error validation for sign up with email and password
 // TODO: error validation for sign up with phone
 
 //* Home page
