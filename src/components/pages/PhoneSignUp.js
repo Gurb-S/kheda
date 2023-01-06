@@ -13,22 +13,39 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 
 import logo from "../../imgs/dice.png";
-import { setUpRecaptcha, auth } from '../../firebase-config'
-import { signInWithPhoneNumber, updateProfile } from 'firebase/auth';
 
 //* Phone
 import { MuiTelInput } from 'mui-tel-input'
 
+//* Firebase
+import { setUpRecaptcha, auth, storage, db } from '../../firebase-config'
+import { signInWithPhoneNumber, updateProfile } from 'firebase/auth';
+import { ref, uploadString } from "firebase/storage";
+import { doc, setDoc } from 'firebase/firestore';
+
+//* bullet point
+const bull = (
+    <Box
+      component="span"
+      sx={{ display: 'inline-block', mx: '2px', transform: 'scale(0.8)' }}
+    >
+      •
+    </Box>
+);
+
 export function PhoneSignUp(){
 
     const navigate = useNavigate();
+
     const [value, setValue] = useState()
 
     const [show, setShow] = useState('hidden')
 
     const [OTP, setOTP] = useState('')
 
-    const [userName, setUserName] = useState('');
+    const [userDisplayName, setUserDisplayName] = useState('');
+
+    const [phoneSignUpError, setPhoneSignUpError] = useState('');
 
     const handleSubmit = async (event) => {
         event.preventDefault();
@@ -37,7 +54,11 @@ export function PhoneSignUp(){
         //* phone
         setUpRecaptcha();
         let appVerifier = window.RecaptchaVerifier;
-        setUserName(data.get('username'))
+        setUserDisplayName(data.get('username'))
+        if(!data.get('username')){
+            setPhoneSignUpError('please provide a valid username')
+            throw new Error('No username')
+        }
         signInWithPhoneNumber(auth,value,appVerifier)
         .then((confirmationResult) => {
             window.confirmationResult = confirmationResult;
@@ -46,39 +67,61 @@ export function PhoneSignUp(){
             setShow('visible')
         })
         .catch((error) =>{
-            console.log(error)
+            console.log(error.message)
+            if(error.message === 'Firebase: Error (auth/invalid-phone-number).'){
+                setPhoneSignUpError('please provide a valid phone number')
+                //console.log('please provide a valid phone number')
+            }
+            else if(error.message === 'reCAPTCHA has already been rendered in this element'){
+                setPhoneSignUpError('server error - please refresh page and try again')
+            }
         })
         //* phone
+        console.log(phoneSignUpError)
         console.log(value)
     };
 
     const verifyOTP = (e) => {
         let otpValue = e.target.value;
         const randomNumber = Math.floor(Math.random() * 5000)
+        const userImg = `https://avatars.dicebear.com/api/bottts/${randomNumber}.svg`
         setOTP(otpValue);
         if(otpValue.length === 6){
             let confirmationResult = window.confirmationResult;
             confirmationResult.confirm(otpValue).then((result) => {
                 // User signed in successfully.
                 const user = result.user;
+                //creates a reference to the user in firebase storage
+                const storageRef = ref(storage, userDisplayName);
                 // ...
-                if(user){
-                    updateProfile(auth.currentUser, {
-                      displayName: userName,
-                      photoURL: `https://avatars.dicebear.com/api/bottts/${randomNumber}.svg`
+                //uploads the url for the user's icon to firebase database
+                uploadString(storageRef, userImg).then(async (snapshot) =>{
+                    // updates the user's username and icon
+                    await updateProfile(user,{
+                        displayName: userDisplayName,
+                        photoURL: userImg
                     })
-                    console.log(userName)
-                    // sets the local storage for name and profile pic
-                    // the reason it needs to be storaged here is bcuz results and user are created before we update the profile
-                    localStorage.setItem("name", userName);
-                    localStorage.setItem('profilePic', `https://avatars.dicebear.com/api/bottts/${randomNumber}.svg`);
-                }
-                console.log(user)
-                navigate('/')
+                    //creates a user object in the user's database that holds user's id, display name and icon
+                    await setDoc(doc(db, "users",user.uid),{
+                        uid: user.uid,
+                        displayName: userDisplayName,
+                        photoURL: userImg
+                    })
+                    // navigate to home page
+                    navigate('/')
+                })
             }).catch((error) => {
             // User couldn't sign in (bad verification code?)
-                console.log(error)
-            // ...
+                console.log(error.message)
+                if(error.message === 'Firebase: Error (auth/invalid-verification-code).'){
+                    setPhoneSignUpError('Invalid Phone number or OTP code. Please refresh page and try again')
+                    //console.log('Email is already used')
+                }
+                else{
+                    setPhoneSignUpError('server error - please refresh page and try again')
+                    //console.log('500 - Internal Server Error: Please close app and try again')
+                }
+                console.log('Sign Up Failed')
             });
         }
     }
@@ -112,7 +155,7 @@ export function PhoneSignUp(){
                             label="Username"
                             autoFocus
                             variant='filled'
-                            sx={{ bgcolor: 'secondary.main', borderRadius: '5px', mt:3 }}
+                            sx={{ bgcolor: (phoneSignUpError.length >= 1 && phoneSignUpError === 'please provide a valid username' || phoneSignUpError.length >= 1 && phoneSignUpError === 'server error - please refresh page and try again' ? 'secondary.dark' : 'secondary.main'), borderRadius: '5px' }}
                         />
                     </Grid>
                     <Grid item xs={12} sx={{ mb: 1 }}>
@@ -121,7 +164,7 @@ export function PhoneSignUp(){
                             fullWidth
                             onChange={setValue}
                             defaultCountry='US'
-                            sx={{ bgcolor: 'secondary.main', borderRadius: '5px', mt: 3 }}
+                            sx={{ bgcolor: (phoneSignUpError.length >= 1 && phoneSignUpError === 'please provide a valid phone number' || phoneSignUpError.length >= 1 && phoneSignUpError === 'server error - please refresh page and try again' ? 'secondary.dark' : 'secondary.main'), borderRadius: '5px' }}
                             label="Phone Number"
                             variant='standard'
                         />
@@ -137,10 +180,17 @@ export function PhoneSignUp(){
                             type='number'
                             value={OTP}
                             onChange={verifyOTP}
-                            sx={{ bgcolor: 'secondary.main', borderRadius: '5px', visibility:show }}
+                            sx={{ bgcolor: (phoneSignUpError.length >= 1 && phoneSignUpError === 'Invalid Phone number or OTP code. Please refresh page and try again' || phoneSignUpError.length >= 1 && phoneSignUpError === 'server error - please refresh page and try again' ? 'secondary.dark' : 'secondary.main'), borderRadius: '5px', visibility:show }}
                         />
                     </Grid>
                 </Grid>
+                {(phoneSignUpError.length >= 1 
+                ? 
+                  <Typography variant='h7' color="error" gutterBottom>
+                    {bull} Error: {phoneSignUpError}
+                  </Typography>
+                : <></>
+                )}
                 <Grid container sx={{ mt: 2 }}>
                     <Grid item xs={6} >
                         <Link href="/" variant="body2" underline='none' sx={{ color: 'primary.light' }}>
