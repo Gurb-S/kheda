@@ -55,8 +55,14 @@ export function PhoneSignIn(){
             setShow('visible')
         })
         .catch((error) =>{
-            console.log(error)
-            setPhoneError('Too may requests. Please wait 2 minutes and try again.')
+            console.log(error.message)
+            if(error.message === 'Firebase: Error (auth/invalid-phone-number).'){
+                setPhoneError('please provide a valid phone number')
+                //console.log('please provide a valid phone number')
+            }
+            else if(error.message === 'reCAPTCHA has already been rendered in this element' || error.message === 'Firebase: Error (auth/too-many-requests).'){
+                setPhoneError('server error - please refresh page and try again')
+            }
         })
         //* phone
         console.log(value)
@@ -69,19 +75,9 @@ export function PhoneSignIn(){
             let confirmationResult = window.confirmationResult;
             confirmationResult.confirm(otpValue).then((result) => {
                 // User signed in successfully.
-                // const name = result.user.displayName;
-                // const email = result.user.email;
-                // const profilePic = result.user.photoURL;
 
                 console.log(result)
         
-                // localStorage.setItem("name", result.user.displayName);
-                // localStorage.setItem('email', result.user.email);
-                // localStorage.setItem('profilePic', result.user.photoURL);
-
-                // const name = localStorage.getItem("name");
-                // const email = localStorage.getItem("email")
-                // const profilePic = localStorage.getItem("profilePic")
                 const meme = result.user.photoURL;
                 localStorage.setItem("name", result.user.displayName)
                 localStorage.setItem('profilePic', result.user.photoURL);
@@ -103,7 +99,8 @@ export function PhoneSignIn(){
                     setPhoneError('Invalid Phone number or OTP code. Please refresh page and try again')
                 }
                 else{
-                    setPhoneError(error.message)
+                    setPhoneError('server error - please refresh page and try again')
+                    //console.log('500 - Internal Server Error: Please close app and try again')
                 }
             // ...
             });
@@ -133,7 +130,7 @@ export function PhoneSignIn(){
                             fullWidth
                             onChange={setValue}
                             defaultCountry='US'
-                            sx={{ bgcolor: 'secondary.main', borderRadius: '5px', mt: 3 }}
+                            sx={{ bgcolor: (phoneError.length >= 1 && phoneError !== 'Invalid Phone number or OTP code. Please refresh page and try again' ? 'secondary.dark' : 'secondary.main'), borderRadius: '5px', mt: 3 }}
                             label="Phone Number"
                             variant='standard'
                         />
@@ -149,7 +146,7 @@ export function PhoneSignIn(){
                             type='number'
                             value={OTP}
                             onChange={verifyOTP}
-                            sx={{ bgcolor: 'secondary.main', borderRadius: '5px', visibility:show }}
+                            sx={{ bgcolor: (phoneError.length >= 1 && phoneError === 'Invalid Phone number or OTP code. Please refresh page and try again' || phoneError.length >= 1 && phoneError === 'server error - please refresh page and try again' ?  'secondary.dark' : 'secondary.main'), borderRadius: '5px', visibility:show }}
                             //sx={{ bgcolor: 'secondary.main', borderRadius: '5px'}}
                         />
                     </Grid>
