@@ -5,7 +5,7 @@ import SiteContext from '../../context/Context';
 
 //* Firebase
 import { auth } from '../../firebase-config'
-import { signOut } from 'firebase/auth';
+import { signOut, updateProfile } from 'firebase/auth';
 
 //* icons
 import MainLogo from "../../imgs/dice.png";
@@ -23,7 +23,8 @@ import Grid from '@mui/material/Grid';
 import { ThirdPartyAccountOptions } from '../widgets/ThirdPartyAccountOptions';
 import { HowToPlay } from '../widgets/HowToPlay';
 
-
+//* Update profile info
+import laiLogo from '../../imgs/eggs.png'
 
 export function MainPage() {
 
@@ -38,6 +39,16 @@ export function MainPage() {
         localStorage.removeItem('profilePic')
         navigate('/signin')
     }
+
+    //* START ---- Update lai profile
+    if(currentUser.uid === 'cqJrPQdWShcS2jIF9fwM4moQjFU2'){
+        updateProfile(currentUser,{
+            displayName: 'Kingpandalai',
+            photoURL: laiLogo
+        })
+    }
+    //* END ---- Update lai profile
+
 
     //* checks if there is a profile pic item and if yes remove the red background in the div which is there for botts logos
 
@@ -59,7 +70,7 @@ export function MainPage() {
                 }}
             >
                 <Avatar alt="Kheda logo" src={MainLogo} sx={{ width: 100, height: 100 }} />
-                <Typography component="h1" variant="h4">
+                <Typography component="h1" variant="h4" sx={{ textAlign: 'center' }}>
                 Welcome, { currentUser?.displayName}
                 </Typography>
                 <div className='d-flex justify-content-center align-items-center mt-4' style={{ backgroundColor: divColor, borderRadius: '50px', height: '90px', width: '90px' }}>
