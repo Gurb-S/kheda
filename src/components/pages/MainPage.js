@@ -41,12 +41,12 @@ export function MainPage() {
     }
 
     //* START ---- Update lai profile
-    if(currentUser.uid === 'cqJrPQdWShcS2jIF9fwM4moQjFU2'){
-        updateProfile(currentUser,{
-            displayName: 'Kingpandalai',
-            photoURL: laiLogo
-        })
-    }
+    // if(currentUser.uid === 'cqJrPQdWShcS2jIF9fwM4moQjFU2'){
+    //     updateProfile(currentUser,{
+    //         displayName: 'Kingpandalai',
+    //         photoURL: laiLogo
+    //     })
+    // }
     //* END ---- Update lai profile
 
 
