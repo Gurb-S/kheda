@@ -1,11 +1,11 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext } from 'react'
 import { useNavigate } from 'react-router-dom';
 import SiteContext from '../../context/Context';
 
 
 //* Firebase
 import { auth } from '../../firebase-config'
-import { signOut, updateProfile } from 'firebase/auth';
+import { signOut } from 'firebase/auth';
 
 //* icons
 import MainLogo from "../../imgs/dice.png";
@@ -24,7 +24,7 @@ import { ThirdPartyAccountOptions } from '../widgets/ThirdPartyAccountOptions';
 import { HowToPlay } from '../widgets/HowToPlay';
 
 //* Update profile info
-import laiLogo from '../../imgs/eggs.png'
+//import laiLogo from '../../imgs/eggs.png'
 
 export function MainPage() {
 
@@ -79,7 +79,7 @@ export function MainPage() {
                 <HowToPlay />
                 <Box sx={{ mt: 2 }}>
                     <Grid item xs>
-                        <ThirdPartyAccountOptions icon={joinGameLogo} name="None" link='/' type='Join Game' game={true}/>
+                        <ThirdPartyAccountOptions icon={joinGameLogo} name="None" link='/join' type='Join Game' game={true}/>
                         <ThirdPartyAccountOptions icon={startGameLogo} name="None" link='/' type='Start Game' game={true} bgcolor='#EE3B55'/>
                     </Grid>
                 </Box>
