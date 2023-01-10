@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import PinInput from 'react-pin-input';
 
 //* Material UI
@@ -15,6 +15,13 @@ import logo from "../../imgs/dice.png";
 
 
 export function JoinPage(){
+
+    const [gameCode, setGameCode] = useState('');
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        console.log(gameCode)
+    }
     return(
         <Container component="main" maxWidth="xs">
         <CssBaseline />
@@ -30,7 +37,7 @@ export function JoinPage(){
           <Typography component="h1" variant="h4">
             Join Game
           </Typography>
-          <Box component="form" noValidate sx={{ my: 10  }}>
+          <Box component="form" onSubmit={handleSubmit} noValidate sx={{ my: 10  }}>
             <Grid container sx={{  justifyContent: 'center' }}>
                 <Typography component="h5" variant="div" sx={{ textAlign: 'center', mb: 3 }}>
                     Enter Code
@@ -40,13 +47,11 @@ export function JoinPage(){
                 <PinInput 
                     length={6} 
                     initialValue=""
-                    onChange={(value, index) => {}} 
                     type="numeric" 
                     inputMode="number"
                     style={{ padding: 'auto' }}  
-                    inputStyle={{border: 'none', borderRadius: '12px', backgroundColor: 'white', color: '#EE3B55'}}
-                    inputFocusStyle={{borderColor: 'none'}}
-                    onComplete={(value, index) => {}}
+                    inputStyle={{border: 'none', borderRadius: '12px', backgroundColor: 'white', color: '#EE3B55', marginBottom: '5px'}}
+                    onComplete={(value) => {setGameCode(value)}}
                     autoSelect={false}
                     regexCriteria={/^[ A-Za-z0-9_@./#&+-]*$/}
                 />
