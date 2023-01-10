@@ -13,13 +13,25 @@ import Container from '@mui/material/Container';
 //* IMGS
 import logo from "../../imgs/dice.png";
 
+//* bullet point
+const bull = (
+    <Box
+      component="span"
+      sx={{ display: 'inline-block', mx: '2px', transform: 'scale(0.8)' }}
+    >
+      •
+    </Box>
+);
+
 
 export function JoinPage(){
 
     const [gameCode, setGameCode] = useState('');
+    const [codeError, setCodeError] = useState('');
 
     const handleSubmit = (e) => {
         e.preventDefault();
+        setCodeError('invalid code')
         console.log(gameCode)
     }
     return(
@@ -56,6 +68,13 @@ export function JoinPage(){
                     regexCriteria={/^[ A-Za-z0-9_@./#&+-]*$/}
                 />
             </Grid>
+            {(codeError.length >= 1 
+                ? 
+                  <Typography variant='h7' color="error" gutterBottom>
+                    {bull} Error: {codeError}
+                  </Typography>
+                : <></>
+            )}
             <Button
               type="submit"
               size='large'
