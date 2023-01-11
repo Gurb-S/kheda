@@ -16,6 +16,7 @@ import { MainPage } from './components/pages/MainPage';
 import { PhoneSignIn } from './components/pages/PhoneSignIn';
 import { ResetPassword } from './components/pages/ResetPassword';
 import { JoinPage } from './components/pages/JoinPage';
+import { StartPage } from './components/pages/StartPage';
 
 //* Widgets
 import { Footer } from './components/widgets/Footer';
@@ -55,6 +56,7 @@ function App() {
               <Route path='/phonesignin' element={<PhoneSignIn />}/>
               <Route path='/resetpassword' element={<ResetPassword />}/>
               <Route path='/join' element={<JoinPage />}/>
+              <Route path='/start' element={<StartPage />}/>
             </Routes>
           </Router>
           <Footer sx={{ mt: 8, mb: 4 }} />
