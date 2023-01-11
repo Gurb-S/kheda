@@ -80,7 +80,7 @@ export function MainPage() {
                 <Box sx={{ mt: 2 }}>
                     <Grid item xs>
                         <ThirdPartyAccountOptions icon={joinGameLogo} name="None" link='/join' type='Join Game' game={true}/>
-                        <ThirdPartyAccountOptions icon={startGameLogo} name="None" link='/' type='Start Game' game={true} bgcolor='#EE3B55'/>
+                        <ThirdPartyAccountOptions icon={startGameLogo} name="None" link='/start' type='Start Game' game={true} bgcolor='#EE3B55'/>
                     </Grid>
                 </Box>
                 <Button
