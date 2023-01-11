@@ -1,5 +1,4 @@
-import React, { useContext, useState } from 'react'
-import SiteContext from '../../context/Context';
+import React, { useState } from 'react'
 
 //* Material UI
 import Avatar from '@mui/material/Avatar';
@@ -182,8 +181,8 @@ export function UserSignUp() {
                   id="password"
                   autoComplete="new-password"
                   variant='filled'
-                  sx={{ bgcolor: (signUpError.length >= 1 && signUpError === 'password should be at least 6 characters' ||
-                  signUpError.length >= 1 && signUpError === 'server error - please close app and try again' ? 'secondary.dark' : 'secondary.main'), borderRadius: '5px' }}
+                  sx={{ bgcolor: ((signUpError.length >= 1 && signUpError === 'password should be at least 6 characters') ||
+                  (signUpError.length >= 1 && signUpError === 'server error - please close app and try again') ? 'secondary.dark' : 'secondary.main'), borderRadius: '5px' }}
                 />
               </Grid>
               <Grid item xs={12}>

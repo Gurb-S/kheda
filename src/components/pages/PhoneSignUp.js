@@ -155,7 +155,7 @@ export function PhoneSignUp(){
                             label="Username"
                             autoFocus
                             variant='filled'
-                            sx={{ bgcolor: (phoneSignUpError.length >= 1 && phoneSignUpError === 'please provide a valid username' || phoneSignUpError.length >= 1 && phoneSignUpError === 'server error - please refresh page and try again' ? 'secondary.dark' : 'secondary.main'), borderRadius: '5px' }}
+                            sx={{ bgcolor: ((phoneSignUpError.length >= 1 && phoneSignUpError === 'please provide a valid username') || (phoneSignUpError.length >= 1 && phoneSignUpError === 'server error - please refresh page and try again') ? 'secondary.dark' : 'secondary.main'), borderRadius: '5px' }}
                         />
                     </Grid>
                     <Grid item xs={12} sx={{ mb: 1 }}>
@@ -164,7 +164,7 @@ export function PhoneSignUp(){
                             fullWidth
                             onChange={setValue}
                             defaultCountry='US'
-                            sx={{ bgcolor: (phoneSignUpError.length >= 1 && phoneSignUpError === 'please provide a valid phone number' || phoneSignUpError.length >= 1 && phoneSignUpError === 'server error - please refresh page and try again' ? 'secondary.dark' : 'secondary.main'), borderRadius: '5px' }}
+                            sx={{ bgcolor: ((phoneSignUpError.length >= 1 && phoneSignUpError === 'please provide a valid phone number') || (phoneSignUpError.length >= 1 && phoneSignUpError === 'server error - please refresh page and try again') ? 'secondary.dark' : 'secondary.main'), borderRadius: '5px' }}
                             label="Phone Number"
                             variant='standard'
                         />
@@ -180,7 +180,7 @@ export function PhoneSignUp(){
                             type='number'
                             value={OTP}
                             onChange={verifyOTP}
-                            sx={{ bgcolor: (phoneSignUpError.length >= 1 && phoneSignUpError === 'Invalid Phone number or OTP code. Please refresh page and try again' || phoneSignUpError.length >= 1 && phoneSignUpError === 'server error - please refresh page and try again' ? 'secondary.dark' : 'secondary.main'), borderRadius: '5px', visibility:show }}
+                            sx={{ bgcolor: ((phoneSignUpError.length >= 1 && phoneSignUpError === 'Invalid Phone number or OTP code. Please refresh page and try again') || (phoneSignUpError.length >= 1 && phoneSignUpError === 'server error - please refresh page and try again') ? 'secondary.dark' : 'secondary.main'), borderRadius: '5px', visibility:show }}
                         />
                     </Grid>
                 </Grid>

@@ -14,7 +14,7 @@ import Container from '@mui/material/Container';
 
 import logo from "../../imgs/dice.png";  
 import { setUpRecaptcha, auth } from '../../firebase-config'
-import { signInWithPhoneNumber, updateProfile } from 'firebase/auth';
+import { signInWithPhoneNumber } from 'firebase/auth';
 
 //* Phone
 import { MuiTelInput } from 'mui-tel-input'
@@ -146,7 +146,7 @@ export function PhoneSignIn(){
                             type='number'
                             value={OTP}
                             onChange={verifyOTP}
-                            sx={{ bgcolor: (phoneError.length >= 1 && phoneError === 'Invalid Phone number or OTP code. Please refresh page and try again' || phoneError.length >= 1 && phoneError === 'server error - please refresh page and try again' ?  'secondary.dark' : 'secondary.main'), borderRadius: '5px', visibility:show }}
+                            sx={{ bgcolor: ((phoneError.length >= 1 && phoneError === 'Invalid Phone number or OTP code. Please refresh page and try again') || (phoneError.length >= 1 && phoneError === 'server error - please refresh page and try again') ?  'secondary.dark' : 'secondary.main'), borderRadius: '5px', visibility:show }}
                             //sx={{ bgcolor: 'secondary.main', borderRadius: '5px'}}
                         />
                     </Grid>
