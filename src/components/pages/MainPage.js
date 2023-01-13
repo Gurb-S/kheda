@@ -74,7 +74,7 @@ export function MainPage() {
                 Welcome, { currentUser?.displayName}
                 </Typography>
                 <div className='d-flex justify-content-center align-items-center mt-4' style={{ backgroundColor: divColor, borderRadius: '50px', height: '90px', width: '90px' }}>
-                    <img src={profilePic ? profilePic : currentUser?.photoURL} alt='profile pic' height='83px' width='88px' style={{ borderRadius: '50px' }} className="mb-2"/>
+                    <img src={profilePic ? profilePic : currentUser?.photoURL} alt='profile pic' height='83px' width='88px' style={{ borderRadius: '50px' }} />
                 </div>
                 <HowToPlay />
                 <Box sx={{ mt: 2 }}>
