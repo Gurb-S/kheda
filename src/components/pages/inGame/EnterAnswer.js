@@ -1,8 +1,12 @@
 import React from 'react'
+import { Link } from 'react-router-dom';
+
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
+import Typography from '@mui/material/Typography';
+
 
 export function EnterAnswer(){
 
@@ -15,7 +19,10 @@ export function EnterAnswer(){
 
 
     return(
-        <Box component="form" noValidate onSubmit={handleSubmit} sx={{ my: 3 }}>
+        <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 0 }}>
+            <Typography id='modal-modal-title' gutterBottom variant="h3" component="h4" align='center' sx={{ mb: 4, fontSize: 20,textDecoration: 'underline', }} >
+            Enter your answer
+            </Typography> 
             <Grid container spacing={2}>
                 <Grid item xs={12} sx={{ mb: 1 }}>
                     <TextField
