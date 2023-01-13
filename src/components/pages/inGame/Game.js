@@ -24,6 +24,7 @@ import { setUpRecaptcha, auth, storage, db } from '../../../firebase-config'
 import { signInWithPhoneNumber, updateProfile } from 'firebase/auth';
 import { ref, uploadString } from "firebase/storage";
 import { doc, setDoc } from 'firebase/firestore';
+import { ChooseAnswer } from './ChooseAnswer';
 
 //* bullet point
 const bull = (
@@ -49,22 +50,21 @@ export function Game(){
             alignItems: 'center',
             }}
             >
-                <Avatar alt="Kheda logo" src={logo} sx={{ width: 100, height: 100 }} />
+            <Avatar alt="Kheda logo" src={logo} sx={{ width: 100, height: 100 }} />
             <Card sx={{ maxWidth: 350, maxHeight: 100,width: 350, height: 100, mx: 'auto', mt: 4, display: 'flex' , bgcolor: 'primary.main', alignContent: 'center', justifyContent: 'center'  }}>
-                <CardContent sx={{ pt: 1, flexWrap: 'wrap', display: 'flex', alignContent: 'center' }}>
-                    <Typography id='modal-modal-title' gutterBottom variant="h5" component="h4" align='center' sx={{ mb: 2, fontSize: 20 }} >
-                    What is Harjit’s favorite food?
+                <CardContent sx={{  flexWrap: 'wrap', display: 'flex', alignContent: 'center' }}>
+                    <Typography id='modal-modal-title' gutterBottom  align='center' sx={{ fontSize: 20, lineHeight: 'normal' }} >
+                    What is Harjit’s favorite food. The fastedt laptop in the word?
                     </Typography>
                 </CardContent>
             </Card>  
             <Typography id='modal-modal-title' gutterBottom variant="h5" component="h4" align='center' sx={{ mt: 2, fontSize: 12 }} >
             1/15
-            </Typography>  
-            <Typography id='modal-modal-title' gutterBottom variant="h3" component="h4" align='center' sx={{ my: 0, fontSize: 20,textDecoration: 'underline', }} >
-            Enter your answer
-            </Typography> 
+            </Typography>   
             </Box>
-            <EnterAnswer />
+            {/* <EnterAnswer /> is the ui for the intial allowing user to submit answer part */}
+            {/* <EnterAnswer /> */}
+            <ChooseAnswer />
         </Container>
     )
 }
