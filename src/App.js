@@ -20,6 +20,7 @@ import { StartPage } from './components/pages/StartPage';
 
 //* Widgets
 import { Footer } from './components/widgets/Footer';
+import { Game } from './components/pages/inGame/Game';
 
 const font = "'Inder', sans-serif";
 
@@ -57,6 +58,7 @@ function App() {
               <Route path='/resetpassword' element={<ResetPassword />}/>
               <Route path='/join' element={<JoinPage />}/>
               <Route path='/start' element={<StartPage />}/>
+              <Route path='/game' element={<Game />}/>
             </Routes>
           </Router>
           <Footer sx={{ mt: 8, mb: 4 }} />
