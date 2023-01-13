@@ -1,0 +1,70 @@
+import React,{ useState } from 'react'
+import { useNavigate } from 'react-router-dom';
+import { EnterAnswer } from './EnterAnswer';
+
+//* Material UI
+import Avatar from '@mui/material/Avatar';
+import Button from '@mui/material/Button';
+import CssBaseline from '@mui/material/CssBaseline';
+import TextField from '@mui/material/TextField';
+import Grid from '@mui/material/Grid';
+import Box from '@mui/material/Box';
+import Typography from '@mui/material/Typography';
+import Container from '@mui/material/Container';
+import Card from '@mui/material/Card';
+import CardContent from '@mui/material/CardContent';
+
+import logo from "../../../imgs/dice.png";
+
+//* Phone
+import { MuiTelInput } from 'mui-tel-input'
+
+//* Firebase
+import { setUpRecaptcha, auth, storage, db } from '../../../firebase-config'
+import { signInWithPhoneNumber, updateProfile } from 'firebase/auth';
+import { ref, uploadString } from "firebase/storage";
+import { doc, setDoc } from 'firebase/firestore';
+
+//* bullet point
+const bull = (
+    <Box
+      component="span"
+      sx={{ display: 'inline-block', mx: '2px', transform: 'scale(0.8)' }}
+    >
+      •
+    </Box>
+);
+
+export function Game(){
+
+
+    return(
+        <Container component="main" maxWidth="xs">
+            <CssBaseline />
+            <Box
+            sx={{
+            marginTop: 6,
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            }}
+            >
+                <Avatar alt="Kheda logo" src={logo} sx={{ width: 100, height: 100 }} />
+            <Card sx={{ maxWidth: 350, maxHeight: 100,width: 350, height: 100, mx: 'auto', mt: 4, display: 'flex' , bgcolor: 'primary.main', alignContent: 'center', justifyContent: 'center'  }}>
+                <CardContent sx={{ pt: 1, flexWrap: 'wrap', display: 'flex', alignContent: 'center' }}>
+                    <Typography id='modal-modal-title' gutterBottom variant="h5" component="h4" align='center' sx={{ mb: 2, fontSize: 20 }} >
+                    What is Harjit’s favorite food?
+                    </Typography>
+                </CardContent>
+            </Card>  
+            <Typography id='modal-modal-title' gutterBottom variant="h5" component="h4" align='center' sx={{ mt: 2, fontSize: 12 }} >
+            1/15
+            </Typography>  
+            <Typography id='modal-modal-title' gutterBottom variant="h3" component="h4" align='center' sx={{ my: 0, fontSize: 20,textDecoration: 'underline', }} >
+            Enter your answer
+            </Typography> 
+            </Box>
+            <EnterAnswer />
+        </Container>
+    )
+}
