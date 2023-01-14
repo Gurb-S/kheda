@@ -20,11 +20,11 @@ import logo from "../../../imgs/dice.png";
 import { MuiTelInput } from 'mui-tel-input'
 
 //* Firebase
-import { setUpRecaptcha, auth, storage, db } from '../../../firebase-config'
-import { signInWithPhoneNumber, updateProfile } from 'firebase/auth';
+import { auth, storage, db } from '../../../firebase-config'
 import { ref, uploadString } from "firebase/storage";
 import { doc, setDoc } from 'firebase/firestore';
 import { ChooseAnswer } from './ChooseAnswer';
+import { WaitingForOthers } from './WaitingForOthers';
 
 //* bullet point
 const bull = (
@@ -64,7 +64,9 @@ export function Game(){
             </Box>
             {/* <EnterAnswer /> is the ui for the intial allowing user to submit answer part */}
             {/* <EnterAnswer /> */}
-            <ChooseAnswer />
+            {/* <ChooseAnswer /> is the ui for the allowing users to choose an answer from the one submitted by other users */}
+            {/* <ChooseAnswer /> */}
+            <WaitingForOthers />
         </Container>
     )
 }
