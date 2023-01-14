@@ -25,6 +25,7 @@ import { ref, uploadString } from "firebase/storage";
 import { doc, setDoc } from 'firebase/firestore';
 import { ChooseAnswer } from './ChooseAnswer';
 import { WaitingForOthers } from './WaitingForOthers';
+import { BarChart } from './BarChart';
 
 //* bullet point
 const bull = (
@@ -66,7 +67,9 @@ export function Game(){
             {/* <EnterAnswer /> */}
             {/* <ChooseAnswer /> is the ui for the allowing users to choose an answer from the one submitted by other users */}
             {/* <ChooseAnswer /> */}
-            <WaitingForOthers />
+            {/* <WaitingForOthers /> is the ui for showing which users haven't choosen an asnwer yet */}
+            {/* <WaitingForOthers /> */}
+            <BarChart />
         </Container>
     )
 }
