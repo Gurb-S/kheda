@@ -47,7 +47,7 @@ function App() {
   return (
     <SiteProvider>
       <ThemeProvider theme={theme}>
-        <Container disableGutters={true}>
+        <Container disableGutters={true} sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
           <Router>
             <Routes>
               <Route path='/' element={<PrivateRoute><MainPage /></PrivateRoute>}/> 
