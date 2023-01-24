@@ -1,6 +1,8 @@
-import React,{ useState } from 'react'
+import React,{ useContext, useState } from 'react'
 import { useNavigate } from 'react-router-dom';
 import { EnterAnswer } from './EnterAnswer';
+import SiteContext from '../../../context/Context';
+
 
 //* Material UI
 import Avatar from '@mui/material/Avatar';
@@ -37,8 +39,11 @@ const bull = (
     </Box>
 );
 
+
+
 export function Game(){
 
+    const {points, setPoints} = useContext(SiteContext)
 
     return(
         <Container component="main" maxWidth="xs">
@@ -49,6 +54,7 @@ export function Game(){
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'center',
+            justifyContent: 'center'
             }}
             >
             <Avatar alt="Kheda logo" src={logo} sx={{ width: 100, height: 100 }} />
@@ -63,6 +69,7 @@ export function Game(){
             1/15
             </Typography>   
             </Box>
+            <Button onClick={()=> setPoints(points + 1)}>Give points</Button>
             {/* <EnterAnswer /> is the ui for the intial allowing user to submit answer part */}
             {/* <EnterAnswer /> */}
             {/* <ChooseAnswer /> is the ui for the allowing users to choose an answer from the one submitted by other users */}
