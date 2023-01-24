@@ -20,6 +20,10 @@ export function SiteProvider({ children }){
         }
     },[])
 
+    //*TEST CHARTJS updating
+    const [ points, setPoints] = useState(4);
+    //* END TEST
+
 
     const [loginError, setLoginError] = useState('');
 
@@ -75,7 +79,9 @@ export function SiteProvider({ children }){
         loginError,
         signInWithGoogle,
         sendResetLink,
-        currentUser
+        currentUser,
+        points,
+        setPoints
     }
 
 
