@@ -29,102 +29,92 @@ ChartJS.register(
 
 export function BarChart() {
 
-    const { currentUser } = useContext(SiteContext)
+    const { currentUser, points } = useContext(SiteContext)
 
-    // const [chartData, setChartData] = useState({
-    //     datasets: [],
-    // });
+    const [chartData, setChartData] = useState({
+        datasets: [],
+    });
 
-    // const [chartOptions, setChartOptions] = useState({});
+    const [chartOptions, setChartOptions] = useState({});
 
-
-    const testChartData = {
+    useEffect(() =>{
+      setChartData({
         labels: [currentUser.displayName, "Kevin", "Geroge", "Micheal", "Oreo","Listen", "Post", "Kold"],
         datasets: [
           {
             label: "Score",
-            data: [2, 1, 4, 2, 3, 5, 6],
+            data: [points, 2, 3, 4, 5, 6, 8, 12],
             borderColor: "#000000",
             backgroundColor: "#EE3B55",
           },
         ],
-    }
-
-    const testOptions ={
+      });
+      setChartOptions({
         responsive: true,
-          maintainAspectRatio: true,
-          plugins: {
-            tooltip:{
-                enabled: false
-            },
-            legend: {
-              position: "top",
-            },
-            title: {
-              display: false,
-              text: "Whom'st let the dogs out",
-            },
-            customCanvasBackgroundColor: {
-                color: 'lightGreen',
-            }
+        maintainAspectRatio: false,
+        plugins: {
+          tooltip:{
+              enabled: true
           },
-          indexAxis: 'y',
-          elements: {
-            bar: {
-              borderWidth: 2,
-            }
+          legend: {
+            position: "top",
           },
-    }
-        // setChartData({
-        //   labels: [currentUser.displayName, "Kevin", "Geroge", "Micheal", "Oreo","Listen", "Post", "Kold"],
-        //   datasets: [
-        //     {
-        //       label: "Score",
-        //       data: [2, 1, 4, 2, 3, 5, 6],
-        //       borderColor: "#000000",
-        //       backgroundColor: "#EE3B55",
-        //     },
-        //   ],
-        // });
-        // setChartOptions({
-        //   responsive: true,
-        //   maintainAspectRatio: true,
-        //   plugins: {
-        //     tooltip:{
-        //         enabled: false
-        //     },
-        //     legend: {
-        //       position: "top",
-        //     },
-        //     title: {
-        //       display: false,
-        //       text: "Whom'st let the dogs out",
-        //     },
-        //     customCanvasBackgroundColor: {
-        //         color: 'lightGreen',
-        //     }
-        //   },
-        //   indexAxis: 'y',
-        //   elements: {
-        //     bar: {
-        //       borderWidth: 2,
-        //     }
-        //   },
-        // });
+          title: {
+            display: false,
+            text: "Whom'st let the dogs out",
+          },
+        },
+        indexAxis: 'y',
+        elements: {
+          bar: {
+            borderWidth: 2,
+          }
+        },
+      }); 
+    },[currentUser, points])
+  // setChartData({
+  //   labels: [currentUser.displayName, "Kevin", "Geroge", "Micheal", "Oreo","Listen", "Post", "Kold"],
+  //   datasets: [
+  //     {
+  //       label: "Score",
+  //       data: [points, 2, 3, 4, 5, 6, 8, 12],
+  //       borderColor: "#000000",
+  //       backgroundColor: "#EE3B55",
+  //     },
+  //   ],
+  // });
+  // setChartOptions({
+  //   responsive: true,
+  //   maintainAspectRatio: false,
+  //   plugins: {
+  //     tooltip:{
+  //         enabled: true
+  //     },
+  //     legend: {
+  //       position: "top",
+  //     },
+  //     title: {
+  //       display: false,
+  //       text: "Whom'st let the dogs out",
+  //     },
+  //   },
+  //   indexAxis: 'y',
+  //   elements: {
+  //     bar: {
+  //       borderWidth: 2,
+  //     }
+  //   },
+  // });
 
     return (
-        <div>
-            <Typography id='modal-modal-title' gutterBottom variant="h3" component="h4" align='center' sx={{ mb: 4, fontSize: 20,textDecoration: 'underline' }} >
+        <div style={{minWidth:'350px', height:'500px'}}>
+            <Typography id='modal-modal-title' gutterBottom variant="h3" component="h4" align='center' sx={{ mb: 4, fontSize: 20,textDecoration: 'underline', display:'block' }} >
                 Scores
             </Typography> 
-            <Bar data={testChartData} options={testOptions} />
+            <Bar 
+              data={chartData} 
+              options={chartOptions} 
+            />
         </div>
-
-        // <Box component="form" noValidate sx={{ mt: 0 }}>
-        //     <Typography id='modal-modal-title' gutterBottom variant="h3" component="h4" align='center' sx={{ mb: 4, fontSize: 20,textDecoration: 'underline', }} >
-        //         Scores
-        //     </Typography> 
-        //     <Bar data={testChartData} options={testOptions} />
-        // </Box> 
     )
 }
