@@ -13,11 +13,6 @@ const firebaseConfig = {
 };
 
 
-export const app = initializeApp(firebaseConfig);
-export const auth = getAuth()
-export const storage = getStorage();
-export const db = getFirestore();
-
 //* Phone Auth
 export const setUpRecaptcha = () => {
     window.RecaptchaVerifier = new RecaptchaVerifier('recaptcha-container', {
@@ -45,3 +40,9 @@ export const signInWithGoogle = () => {
         alert(error);
     })
 }
+
+
+export const app = initializeApp(firebaseConfig);
+export const auth = getAuth()
+export const storage = getStorage();
+export const db = getFirestore();
