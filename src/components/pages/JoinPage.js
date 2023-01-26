@@ -1,5 +1,6 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import PinInput from 'react-pin-input';
+import SiteContext from '../../context/Context';
 
 //* Material UI
 import Avatar from '@mui/material/Avatar';
@@ -12,6 +13,10 @@ import Container from '@mui/material/Container';
 
 //* IMGS
 import logo from "../../imgs/dice.png";
+
+//* Firebase
+import { db } from '../../firebase-config';
+import { doc, setDoc } from 'firebase/firestore';
 
 //* bullet point
 const bull = (
@@ -29,11 +34,21 @@ export function JoinPage(){
     const [gameCode, setGameCode] = useState('');
     const [codeError, setCodeError] = useState('');
 
-    const handleSubmit = (e) => {
+    const { currentUser } = useContext(SiteContext)
+
+    const handleSubmit = async (e) => {
         e.preventDefault();
         setCodeError('invalid code')
         console.log(gameCode)
-    }
+        const gameString = gameCode.toString();
+
+        const roomRef = doc(db,`rooms/${gameString}/users/${currentUser.uid}`)
+
+        await setDoc(roomRef,{
+          userName: currentUser.displayName,
+          photoURL: currentUser.photoURL
+        })
+    } 
     return(
         <Container component="main" maxWidth="xs">
         <CssBaseline />
