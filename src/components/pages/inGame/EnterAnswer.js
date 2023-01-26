@@ -1,6 +1,8 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { Link } from 'react-router-dom';
+import SiteContext from '../../../context/Context';
 
+//* Material UI
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
@@ -8,13 +10,28 @@ import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 
 
+//* Firebase
+import { addDoc, collection } from 'firebase/firestore';
+import { db } from '../../../firebase-config';
+
 export function EnterAnswer(){
 
-    const handleSubmit = (e) => {
+    const { currentUser } = useContext(SiteContext);
+
+    const answerRef = collection(db, "user-answers") 
+ 
+    const handleSubmit = async (e) => {
         e.preventDefault();
         //* data from form field
         const data = new FormData(e.currentTarget);
+        const userAnswer = data.get('answer')
         console.log(data.get('answer'))
+        await addDoc(answerRef, {
+            answer: userAnswer,
+            user: currentUser.displayName, 
+            uid: currentUser.uid,
+            room: "567345"
+        })
     }
 
 
