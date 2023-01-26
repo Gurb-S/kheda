@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import PinInput from 'react-pin-input';
 
 //* Material UI
@@ -18,6 +18,11 @@ import ListItem from '@mui/material/ListItem';
 import logo from "../../imgs/dice.png";
 import SiteContext from '../../context/Context';
 
+//* Firebase
+import { db } from '../../firebase-config';
+import { doc, addDoc, collection } from 'firebase/firestore';
+import { useCollectionData } from 'react-firebase-hooks/firestore'
+
 //* bullet point
 const bull = (
     <Box
@@ -30,19 +35,45 @@ const bull = (
 
 export function StartPage() {
 
-    const { currentUser } = useContext(SiteContext)
+    const { currentUser, generateCode } = useContext(SiteContext)
 
-    //const [gameCode, setGameCode] = useState('');
+    const [gameCode, setGameCode] = useState(generateCode());
     const [codeError, setCodeError] = useState('');
-    const randomNumber = Math.floor(Math.random() * 999999) + 100000;
-    
+
+    const query = collection(db, "rooms/098765/users")
+
+    const [docs , loading, error ] = useCollectionData(query)
+
+
+    console.log(docs)
+
+    // useEffect(() =>{
+
+    //     // const gameString = gameCode.toString();
+    //     const createRoom = async () => {
+    //         console.log(currentUser.displayName)
+    //         await addDoc(roomsCollectionRef,{
+    //             userName: currentUser?.displayName,
+    //             photoURL: currentUser?.photoURL
+    //         })
+    //     }
+    //     createRoom();
+
+    // }, [])
+
+    // await setDoc(doc(db, "users", res.user.uid),{
+    //     uid: res.user.uid,
+    //     displayName: userDisplayName,
+    //     photoURL: userImg
+    // })
+
     const handleSubmit = (e) => {
         e.preventDefault();
         setCodeError('invalid code')       
-        //console.log(gameCode)
+        console.log(gameCode)
+
     }
 
-    console.log(randomNumber)
     return(
         <Container component="main" maxWidth="xs">
         <CssBaseline />
@@ -67,12 +98,13 @@ export function StartPage() {
             <Grid>
                 <PinInput 
                     length={6} 
-                    initialValue={randomNumber}
+                    initialValue={gameCode}
                     type="numeric" 
                     inputMode="number"
                     style={{ padding: 'auto' }}  
                     inputStyle={{border: 'none', borderRadius: '12px', backgroundColor: 'white', color: '#EE3B55', marginBottom: '5px'}}
-                    // onComplete={(value) => {setGameCode(value)}}
+                    onComplete={(value) => {setGameCode(value)}}
+                    //onSubmit={(value) => {setGameCode(value)}}
                     disabled
                     autoSelect={false}
                     regexCriteria={/^[ A-Za-z0-9_@./#&+-]*$/}
@@ -92,6 +124,25 @@ export function StartPage() {
                     </Typography>
                     <List sx={{ width: '100%', maxWidth: 360,height: 150 , overflow: 'auto' ,bgcolor: 'background.paper' }}>
                         <ListItem sx={{ justifyContent: 'center' }}>
+                            {docs?.map((doc) =>(
+                                <div className='d-flex justify-content-center align-items-center mt-0 mx-1' style={{ backgroundColor: '#EE3B55', borderRadius: '50px', height: '54px', width: '54px' }}>
+                                    <img src={doc.photoURL} alt='profile pic' height='49.8px' width='52.8px' style={{ borderRadius: '50px' }} className="mb-2" />
+                                </div>
+                            ))}
+                            {/* <div className='d-flex justify-content-center align-items-center mt-0 mx-1' style={{ backgroundColor: '#EE3B55', borderRadius: '50px', height: '54px', width: '54px' }}>
+                                <img src={currentUser?.photoURL} alt='profile pic' height='49.8px' width='52.8px' style={{ borderRadius: '50px' }} className="mb-2" />
+                            </div>
+                            <div className='d-flex justify-content-center align-items-center mt-0 mx-1' style={{ backgroundColor: '#EE3B55', borderRadius: '50px', height: '54px', width: '54px' }}>
+                                <img src={currentUser?.photoURL} alt='profile pic' height='49.8px' width='52.8px' style={{ borderRadius: '50px' }} className="mb-2" />
+                            </div>
+                            <div className='d-flex justify-content-center align-items-center mt-0 mx-1' style={{ backgroundColor: '#EE3B55', borderRadius: '50px', height: '54px', width: '54px' }}>
+                                <img src={currentUser?.photoURL} alt='profile pic' height='49.8px' width='52.8px' style={{ borderRadius: '50px' }} className="mb-2" />
+                            </div>
+                            <div className='d-flex justify-content-center align-items-center mt-0 mx-1' style={{ backgroundColor: '#EE3B55', borderRadius: '50px', height: '54px', width: '54px' }}>
+                                <img src={currentUser?.photoURL} alt='profile pic' height='49.8px' width='52.8px' style={{ borderRadius: '50px' }} className="mb-2" />
+                            </div> */}
+                        </ListItem>
+                        {/* <ListItem sx={{ justifyContent: 'center' }}>
                             <div className='d-flex justify-content-center align-items-center mt-0 mx-1' style={{ backgroundColor: '#EE3B55', borderRadius: '50px', height: '54px', width: '54px' }}>
                                 <img src={currentUser?.photoURL} alt='profile pic' height='49.8px' width='52.8px' style={{ borderRadius: '50px' }} className="mb-2" />
                             </div>
@@ -132,21 +183,7 @@ export function StartPage() {
                             <div className='d-flex justify-content-center align-items-center mt-0 mx-1' style={{ backgroundColor: '#EE3B55', borderRadius: '50px', height: '54px', width: '54px' }}>
                                 <img src={currentUser?.photoURL} alt='profile pic' height='49.8px' width='52.8px' style={{ borderRadius: '50px' }} className="mb-2" />
                             </div>
-                        </ListItem>
-                        <ListItem sx={{ justifyContent: 'center' }}>
-                            <div className='d-flex justify-content-center align-items-center mt-0 mx-1' style={{ backgroundColor: '#EE3B55', borderRadius: '50px', height: '54px', width: '54px' }}>
-                                <img src={currentUser?.photoURL} alt='profile pic' height='49.8px' width='52.8px' style={{ borderRadius: '50px' }} className="mb-2" />
-                            </div>
-                            <div className='d-flex justify-content-center align-items-center mt-0 mx-1' style={{ backgroundColor: '#EE3B55', borderRadius: '50px', height: '54px', width: '54px' }}>
-                                <img src={currentUser?.photoURL} alt='profile pic' height='49.8px' width='52.8px' style={{ borderRadius: '50px' }} className="mb-2" />
-                            </div>
-                            <div className='d-flex justify-content-center align-items-center mt-0 mx-1' style={{ backgroundColor: '#EE3B55', borderRadius: '50px', height: '54px', width: '54px' }}>
-                                <img src={currentUser?.photoURL} alt='profile pic' height='49.8px' width='52.8px' style={{ borderRadius: '50px' }} className="mb-2" />
-                            </div>
-                            <div className='d-flex justify-content-center align-items-center mt-0 mx-1' style={{ backgroundColor: '#EE3B55', borderRadius: '50px', height: '54px', width: '54px' }}>
-                                <img src={currentUser?.photoURL} alt='profile pic' height='49.8px' width='52.8px' style={{ borderRadius: '50px' }} className="mb-2" />
-                            </div>
-                        </ListItem>
+                        </ListItem> */}
                     </List>
                 </CardContent>
             </Card>    
