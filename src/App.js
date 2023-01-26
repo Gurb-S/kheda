@@ -56,9 +56,9 @@ function App() {
               <Route path='/phonesignup' element={<PhoneSignUp />}/>
               <Route path='/phonesignin' element={<PhoneSignIn />}/>
               <Route path='/resetpassword' element={<ResetPassword />}/>
-              <Route path='/join' element={<JoinPage />}/>
-              <Route path='/start' element={<StartPage />}/>
-              <Route path='/game' element={<Game />}/>
+              <Route path='/join' element={<PrivateRoute><JoinPage /></PrivateRoute>}/>
+              <Route path='/start' element={<PrivateRoute><StartPage /></PrivateRoute>}/>
+              <Route path='/game' element={<PrivateRoute><Game /></PrivateRoute>}/>
             </Routes>
           </Router>
           <Footer sx={{ mt: 8, mb: 4 }} />
