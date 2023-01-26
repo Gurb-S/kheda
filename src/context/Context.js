@@ -1,13 +1,15 @@
 import React, { useEffect, useState } from 'react'
+
 //* Firebase
 import { signInWithEmailAndPassword, sendPasswordResetEmail, onAuthStateChanged } from 'firebase/auth';
 import { auth, signInWithGoogle } from '../firebase-config';
+import { doc, addDoc, collection } from 'firebase/firestore';
 
 export const SiteContext = React.createContext();
 
 export function SiteProvider({ children }){
 
-    const [currentUser, setCurrentUser ] = useState({});
+    const [ currentUser, setCurrentUser ] = useState({});
 
     useEffect(() =>{
         const unsub = onAuthStateChanged(auth,(user) =>{
@@ -24,6 +26,16 @@ export function SiteProvider({ children }){
     const [ points, setPoints] = useState(4);
     //* END TEST
 
+    //* Creates the code for the user on the start page
+    const generateCode = () =>{
+        const randomNumber = Math.floor(Math.random() * 99999) + 100000;
+        if(randomNumber > 99999 && randomNumber < 1000000){
+            return randomNumber
+        }
+        else{
+            return Math.floor(Math.random() * 99999) + 100000;
+        }
+    }
 
     const [loginError, setLoginError] = useState('');
 
@@ -81,7 +93,11 @@ export function SiteProvider({ children }){
         sendResetLink,
         currentUser,
         points,
-        setPoints
+        setPoints,
+        generateCode,
+        doc,
+        addDoc,
+        collection
     }
 
 
@@ -109,7 +125,8 @@ export default SiteContext;
 
 //* Sign Up page
 // // TODO: error validation for sign up with email and password
-// TODO: error validation for sign up with phone
+// // TODO: error validation for sign up with phone
 
 //* Home page
-// TODO: fix error with page needing to be refreshed for name and icon to show up
+// // TODO: fix error with page needing to be refreshed for name and icon to show up
+
