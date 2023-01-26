@@ -71,12 +71,13 @@ export function Game(){
             </Box>
             <Button onClick={()=> setPoints(points + 1)}>Give points</Button>
             {/* <EnterAnswer /> is the ui for the intial allowing user to submit answer part */}
-            {/* <EnterAnswer /> */}
+            <EnterAnswer />
             {/* <ChooseAnswer /> is the ui for the allowing users to choose an answer from the one submitted by other users */}
             {/* <ChooseAnswer /> */}
             {/* <WaitingForOthers /> is the ui for showing which users haven't choosen an asnwer yet */}
             {/* <WaitingForOthers /> */}
-            <BarChart />
+            {/* <BarChart /> is the ui that shows user scores in a bar chart format */}
+            {/* <BarChart /> */}
         </Container>
     )
 }
