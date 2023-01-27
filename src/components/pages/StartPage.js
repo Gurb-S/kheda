@@ -17,11 +17,13 @@ import ListItem from '@mui/material/ListItem';
 //* IMGS
 import logo from "../../imgs/dice.png";
 import SiteContext from '../../context/Context';
+import refreshLogo from "../../imgs/refresh.png"
 
 //* Firebase
 import { db } from '../../firebase-config';
-import { doc, addDoc, collection } from 'firebase/firestore';
+import { doc, setDoc, collection } from 'firebase/firestore';
 import { useCollectionData } from 'react-firebase-hooks/firestore'
+import { useNavigate } from 'react-router-dom';
 
 //* bullet point
 const bull = (
@@ -35,13 +37,17 @@ const bull = (
 
 export function StartPage() {
 
-    const { currentUser, generateCode } = useContext(SiteContext)
+    const { currentUser, generateGameCode, gameCode, setGameCode } = useContext(SiteContext)
 
-    const [gameCode, setGameCode] = useState(generateCode());
+    // const [gameCode, setGameCode] = useState(generateCode());
     const [codeError, setCodeError] = useState('');
 
-    const query = collection(db, "rooms/098765/users")
+    const gameString = gameCode.toString();
 
+    const navigate = useNavigate();
+ 
+    //* give live feedback on who's in the room
+    const query = collection(db, `rooms/${gameString}/users`)
     const [docs , loading, error ] = useCollectionData(query)
 
 
@@ -67,11 +73,21 @@ export function StartPage() {
     //     photoURL: userImg
     // })
 
-    const handleSubmit = (e) => {
+    const code = () =>{
+        console.log(generateGameCode())
+    }
+
+    const handleSubmit = async (e) => {
         e.preventDefault();
         setCodeError('invalid code')       
         console.log(gameCode)
 
+        const roomRef = doc(db,`rooms/${gameString}/users/${currentUser.uid}`)
+        await setDoc(roomRef,{
+          userName: currentUser.displayName,
+          photoURL: currentUser.photoURL
+        })
+        navigate('/game')
     }
 
     return(
@@ -109,14 +125,15 @@ export function StartPage() {
                     autoSelect={false}
                     regexCriteria={/^[ A-Za-z0-9_@./#&+-]*$/}
                 />
+                <Button onClick={code}><img src={refreshLogo} alt='refresh'/></Button>
             </Grid>
-            {(codeError.length >= 1 
+            {/* {(codeError.length >= 1 
                 ? 
                   <Typography variant='h7' color="error" gutterBottom>
                     {bull} Error: {codeError}
                   </Typography>
                 : <></>
-            )}
+            )} */}
             <Card sx={{ maxWidth: 345, mx: 'auto', mt: 8 }}>
                 <CardContent sx={{ pt: 1 }}>
                     <Typography id='modal-modal-title' gutterBottom variant="h5" component="h4" align='center' sx={{ textDecoration: 'underline', mb: 0 }} >
@@ -193,7 +210,7 @@ export function StartPage() {
               variant="contained"
               sx={{ mt: 5, mb: 0, borderRadius: '16px', display: 'block', mx: 'auto' }}
             >
-              Join
+              Start Game
             </Button>
           </Box>      
         </Box>
