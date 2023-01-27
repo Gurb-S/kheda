@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react'
-
+import Cookies from 'js-cookie';
 //* Firebase
 import { signInWithEmailAndPassword, sendPasswordResetEmail, onAuthStateChanged } from 'firebase/auth';
 import { auth, signInWithGoogle } from '../firebase-config';
-import { doc, addDoc, collection } from 'firebase/firestore';
+import { doc, addDoc, setDoc, collection } from 'firebase/firestore';
 
 export const SiteContext = React.createContext();
 
@@ -22,20 +22,34 @@ export function SiteProvider({ children }){
         }
     },[])
 
+    // function that allows you to easily create cookies
+    const setCookie = (name, count) => {
+        const cookieOptions = {
+            expires: 1, //1 day
+            secure: true,  
+            sameSite: "None"
+        };
+        Cookies.set(`${name}`, count, cookieOptions)
+    }
+
     //*TEST CHARTJS updating
     const [ points, setPoints] = useState(4);
     //* END TEST
 
     //* Creates the code for the user on the start page
-    const generateCode = () =>{
+    const generateGameCode = () =>{
         const randomNumber = Math.floor(Math.random() * 99999) + 100000;
         if(randomNumber > 99999 && randomNumber < 1000000){
+            setCookie('gameCode',randomNumber)
             return randomNumber
         }
         else{
             return Math.floor(Math.random() * 99999) + 100000;
         }
     }
+
+    const gameCodeCookie = Cookies.get('gameCode')
+    const [gameCode, setGameCode] = useState(gameCodeCookie);
 
     const [loginError, setLoginError] = useState('');
 
@@ -47,6 +61,7 @@ export function SiteProvider({ children }){
                 password
             );
             //console.log(user)
+            generateGameCode()
             navigate('/')
         } catch(error){
             //! START: delete this
@@ -94,10 +109,13 @@ export function SiteProvider({ children }){
         currentUser,
         points,
         setPoints,
-        generateCode,
+        generateGameCode,
         doc,
         addDoc,
-        collection
+        collection,
+        setDoc,
+        gameCode,
+        setGameCode
     }
 
 
