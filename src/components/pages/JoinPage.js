@@ -16,7 +16,6 @@ import logo from "../../imgs/dice.png";
 
 //* Firebase
 import { db } from '../../firebase-config';
-import { doc, setDoc } from 'firebase/firestore';
 
 //* bullet point
 const bull = (
@@ -34,7 +33,7 @@ export function JoinPage(){
     const [gameCode, setGameCode] = useState('');
     const [codeError, setCodeError] = useState('');
 
-    const { currentUser } = useContext(SiteContext)
+    const { currentUser, doc, setDoc } = useContext(SiteContext)
 
     const handleSubmit = async (e) => {
         e.preventDefault();
