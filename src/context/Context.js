@@ -44,6 +44,7 @@ export function SiteProvider({ children }){
             return randomNumber
         }
         else{
+            setCookie('gameCode',randomNumber)
             return Math.floor(Math.random() * 99999) + 100000;
         }
     }
