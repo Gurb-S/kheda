@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState, useReducer } from 'react'
 import PinInput from 'react-pin-input';
 
 //* Material UI
@@ -13,6 +13,7 @@ import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
+import Tooltip from '@mui/material/Tooltip';
 
 //* IMGS
 import logo from "../../imgs/dice.png";
@@ -38,6 +39,7 @@ const bull = (
 export function StartPage() {
 
     const { currentUser, generateGameCode, gameCode, setGameCode } = useContext(SiteContext)
+
 
     // const [gameCode, setGameCode] = useState(generateCode());
     const [codeError, setCodeError] = useState('');
@@ -74,8 +76,11 @@ export function StartPage() {
     // })
 
     const code = () =>{
-        console.log(generateGameCode())
+        const codeThing = generateGameCode();
+        console.log(codeThing)
+        window.location.reload(true)
     }
+
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -111,7 +116,11 @@ export function StartPage() {
                     Game Code
                 </Typography>
             </Grid>
-            <Grid>
+            <Grid sx={{
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+            }}>
                 <PinInput 
                     length={6} 
                     initialValue={gameCode}
@@ -119,13 +128,13 @@ export function StartPage() {
                     inputMode="number"
                     style={{ padding: 'auto' }}  
                     inputStyle={{border: 'none', borderRadius: '12px', backgroundColor: 'white', color: '#EE3B55', marginBottom: '5px'}}
-                    onComplete={(value) => {setGameCode(value)}}
-                    //onSubmit={(value) => {setGameCode(value)}}
                     disabled
                     autoSelect={false}
                     regexCriteria={/^[ A-Za-z0-9_@./#&+-]*$/}
                 />
-                <Button onClick={code}><img src={refreshLogo} alt='refresh'/></Button>
+                <Tooltip title="Get new code" arrow>
+                    <Button onClick={code} sx={{ mt: 2 }}><img src={refreshLogo} alt='refresh' height="40.5px" /></Button>
+                </Tooltip>
             </Grid>
             {/* {(codeError.length >= 1 
                 ? 
