@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState, useReducer } from 'react'
+import React, { useContext, useState } from 'react'
 import PinInput from 'react-pin-input';
 
 //* Material UI
@@ -21,73 +21,43 @@ import SiteContext from '../../context/Context';
 import refreshLogo from "../../imgs/refresh.png"
 
 //* Firebase
-import { db } from '../../firebase-config';
-import { doc, setDoc, collection } from 'firebase/firestore';
 import { useCollectionData } from 'react-firebase-hooks/firestore'
 import { useNavigate } from 'react-router-dom';
 
-//* bullet point
-const bull = (
-    <Box
-      component="span"
-      sx={{ display: 'inline-block', mx: '2px', transform: 'scale(0.8)' }}
-    >
-      •
-    </Box>
-);
 
 export function StartPage() {
 
-    const { currentUser, generateGameCode, gameCode, setGameCode } = useContext(SiteContext)
+    const { currentUser, generateGameCode, gameCodeCookie, doc, setDoc, collection, db, deleteDoc } = useContext(SiteContext)
 
-
-    // const [gameCode, setGameCode] = useState(generateCode());
-    const [codeError, setCodeError] = useState('');
-
-    const gameString = gameCode.toString();
 
     const navigate = useNavigate();
  
-    //* give live feedback on who's in the room
-    const query = collection(db, `rooms/${gameString}/users`)
-    const [docs , loading, error ] = useCollectionData(query)
+    //* gives live feedback on who's in the room
+    const query = collection(db, `rooms/${gameCodeCookie}/users`)
+    const [ docs ] = useCollectionData(query)
 
 
-    console.log(docs)
+    //console.log(docs)
 
-    // useEffect(() =>{
+    //* Delete room 
+    const deleteRoom = async () => {
+        const roomRef = doc(db,`rooms/${gameCodeCookie}`)
+        await deleteDoc(roomRef)
+    }
 
-    //     // const gameString = gameCode.toString();
-    //     const createRoom = async () => {
-    //         console.log(currentUser.displayName)
-    //         await addDoc(roomsCollectionRef,{
-    //             userName: currentUser?.displayName,
-    //             photoURL: currentUser?.photoURL
-    //         })
-    //     }
-    //     createRoom();
-
-    // }, [])
-
-    // await setDoc(doc(db, "users", res.user.uid),{
-    //     uid: res.user.uid,
-    //     displayName: userDisplayName,
-    //     photoURL: userImg
-    // })
-
-    const code = () =>{
-        const codeThing = generateGameCode();
-        console.log(codeThing)
-        window.location.reload(true)
+    //* genertae new code for start page and reloads page
+    const newCodeStartPage = () =>{
+        generateGameCode();
+        deleteRoom();
+        //* Forces page to refresh
+        window.location.reload(false)
     }
 
 
     const handleSubmit = async (e) => {
-        e.preventDefault();
-        setCodeError('invalid code')       
-        console.log(gameCode)
-
-        const roomRef = doc(db,`rooms/${gameString}/users/${currentUser.uid}`)
+        e.preventDefault();     
+        console.log(gameCodeCookie)
+        const roomRef = doc(db,`rooms/${gameCodeCookie}/users/${currentUser.uid}`)
         await setDoc(roomRef,{
           userName: currentUser.displayName,
           photoURL: currentUser.photoURL
@@ -123,7 +93,7 @@ export function StartPage() {
             }}>
                 <PinInput 
                     length={6} 
-                    initialValue={gameCode}
+                    initialValue={gameCodeCookie}
                     type="numeric" 
                     inputMode="number"
                     style={{ padding: 'auto' }}  
@@ -133,7 +103,7 @@ export function StartPage() {
                     regexCriteria={/^[ A-Za-z0-9_@./#&+-]*$/}
                 />
                 <Tooltip title="Get new code" arrow>
-                    <Button onClick={code} sx={{ mt: 2 }}><img src={refreshLogo} alt='refresh' height="40.5px" /></Button>
+                    <Button onClick={newCodeStartPage} sx={{ mt: 2 }}><img src={refreshLogo} alt='refresh' height="40.5px" /></Button>
                 </Tooltip>
             </Grid>
             {/* {(codeError.length >= 1 
@@ -151,7 +121,7 @@ export function StartPage() {
                     <List sx={{ width: '100%', maxWidth: 360,height: 150 , overflow: 'auto' ,bgcolor: 'background.paper' }}>
                         <ListItem sx={{ justifyContent: 'center' }}>
                             {docs?.map((doc) =>(
-                                <div className='d-flex justify-content-center align-items-center mt-0 mx-1' style={{ backgroundColor: '#EE3B55', borderRadius: '50px', height: '54px', width: '54px' }}>
+                                <div key={Math.random()} className='d-flex justify-content-center align-items-center mt-0 mx-1' style={{ backgroundColor: '#EE3B55', borderRadius: '50px', height: '54px', width: '54px' }}>
                                     <img src={doc.photoURL} alt='profile pic' height='49.8px' width='52.8px' style={{ borderRadius: '50px' }} className="mb-2" />
                                 </div>
                             ))}
