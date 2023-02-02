@@ -14,8 +14,6 @@ import Container from '@mui/material/Container';
 //* IMGS
 import logo from "../../imgs/dice.png";
 
-//* Firebase
-import { db } from '../../firebase-config';
 
 //* bullet point
 const bull = (
@@ -33,7 +31,7 @@ export function JoinPage(){
     const [gameCode, setGameCode] = useState('');
     const [codeError, setCodeError] = useState('');
 
-    const { currentUser, doc, setDoc } = useContext(SiteContext)
+    const { currentUser, doc, setDoc, db } = useContext(SiteContext)
 
     const handleSubmit = async (e) => {
         e.preventDefault();
