@@ -2,8 +2,8 @@ import React, { useEffect, useState } from 'react'
 import Cookies from 'js-cookie';
 //* Firebase
 import { signInWithEmailAndPassword, sendPasswordResetEmail, onAuthStateChanged } from 'firebase/auth';
-import { auth, signInWithGoogle } from '../firebase-config';
-import { doc, addDoc, setDoc, collection } from 'firebase/firestore';
+import { auth, signInWithGoogle, db } from '../firebase-config';
+import { doc, addDoc, setDoc, collection, deleteDoc } from 'firebase/firestore';
 
 export const SiteContext = React.createContext();
 
@@ -36,21 +36,27 @@ export function SiteProvider({ children }){
     const [ points, setPoints] = useState(4);
     //* END TEST
 
+
     //* Creates the code for the user on the start page
     const generateGameCode = () =>{
         const randomNumber = Math.floor(Math.random() * 99999) + 100000;
-        if(randomNumber > 99999 && randomNumber < 1000000){
+        console.log(randomNumber)
+        // console.log(randomNumber.toString().length)
+        if(randomNumber.toString().length === 6){
             setCookie('gameCode',randomNumber)
             return randomNumber
-        }
-        else{
-            setCookie('gameCode',randomNumber)
-            return Math.floor(Math.random() * 99999) + 100000;
         }
     }
 
     const gameCodeCookie = Cookies.get('gameCode')
-    const [gameCode, setGameCode] = useState(gameCodeCookie);
+    // const [gameCode, setGameCode] = useState(gameCodeCookie);
+
+
+    //* Check if cookie avaiable
+    if(gameCodeCookie === undefined){
+        generateGameCode();
+    }
+
 
     const [loginError, setLoginError] = useState('');
 
@@ -61,7 +67,6 @@ export function SiteProvider({ children }){
                 email,
                 password
             );
-            //console.log(user)
             generateGameCode()
             navigate('/')
         } catch(error){
@@ -115,8 +120,9 @@ export function SiteProvider({ children }){
         addDoc,
         collection,
         setDoc,
-        gameCode,
-        setGameCode
+        db,
+        deleteDoc,
+        gameCodeCookie,
     }
 
 
