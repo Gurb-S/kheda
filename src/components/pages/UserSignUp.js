@@ -54,7 +54,7 @@ export function UserSignUp() {
     const userDisplayName = data.get('username');
     const userEmail = data.get('email');
     const userPassword = data.get('password');
-    const userImg = `https://avatars.dicebear.com/api/bottts/${randomNumber}.svg`
+    const userImg = `https://api.dicebear.com/5.x/bottts/svg?seed=${randomNumber}`
     //* END value provided by user
 
     const register = async () => {
