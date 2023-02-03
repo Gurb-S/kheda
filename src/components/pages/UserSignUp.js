@@ -70,27 +70,22 @@ export function UserSignUp() {
         }
         //creates the user's account
         const res = await createUserWithEmailAndPassword(auth, userEmail, userPassword)
-        //creates a reference to the user in firebase storage
-        const storageRef = ref(storage, userDisplayName);
-  
-        //uploads the url for the user's icon to firebase database
-        uploadString(storageRef, userImg).then(async (snapshot) =>{
-            // updates the user's username and icon
-            await updateProfile(res.user,{
-              displayName: userDisplayName,
-              photoURL: userImg
-            })
-            //creates a user object in the user's database that holds user's id, display name and icon
-            await setDoc(doc(db, "users", res.user.uid),{
-              uid: res.user.uid,
-              displayName: userDisplayName,
-              photoURL: userImg
-            })
-            // navigate to home page
-            navigate('/')
+        // updates the user's display name and photourl. This is the only way to set a username and photo for user
+        await updateProfile(res.user,{
+          displayName: userDisplayName,
+          photoURL: userImg
         })
-        //! NEED TO DELETE
-        console.log(res)
+
+        //creates a reference to the users room in firebase database
+        const roomRef = doc(db,`users`)
+        //Adds the username photo and id to the database
+        await setDoc(roomRef,{
+          uid: res.user.uid,
+          displayName: userDisplayName,
+          photoURL: userImg
+        })
+        navigate('/')
+        
       } catch(error){
         console.log(error.message)
         if(error.message === 'Firebase: Error (auth/email-already-in-use).'){
